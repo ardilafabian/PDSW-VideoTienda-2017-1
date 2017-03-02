@@ -22,11 +22,13 @@ import static org.junit.Assert.*;
  * 
  * Frontera:
  * CF1: Multas a devoluciones hechas en la fecha exacta (multa 0).
+ * CF2: Numero minimo de dias que puede solicitar prestado (numdias 1)
  * 
  * Clases de equivalencia:
  * CE1: Multas hechas a devolciones realizadas en fechas posteriores
- * a la limite. (multa multa_diaria*dias_retraso)
- * 
+ * a la limite. (multa multa_diaria*dias_retraso).
+ * CE2: Numero de dias estandard del prestamo de un item (numdias 7)
+ * CE3: El item solicitado para alquiler no debe estar disponible despues de alquilado (item no esta en la lista de disponibles)
  * 
  * 
  */
@@ -77,7 +79,20 @@ public class AlquilerTest {
     }
     
     
-    
+    @Test
+    public void CE3test() throws ExcepcionServiciosAlquiler {
+        ServiciosAlquiler sa=ServiciosAlquilerItemsStub.getInstance();
+        
+        Item i1=new Item(sa.consultarTipoItem(1), 55, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");        
+        sa.registrarCliente(new Cliente("Juan Perez",9843,"24234","calle 123","aa@gmail.com"));
+        sa.registrarItem(i1);
+        
+        Item item=sa.consultarItem(55);
+        
+        sa.registrarAlquilerCliente(java.sql.Date.valueOf("2005-12-20"), 9843, item, 5);
+        
+        assertEquals("Item aun aparece disponible", false ,sa.consultarItemsDisponibles().contains(item));
+    }
     
     
     

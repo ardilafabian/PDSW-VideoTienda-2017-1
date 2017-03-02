@@ -65,7 +65,7 @@ public abstract class ServiciosAlquiler {
     /**
      * @obj rejistrar el alkiler de un item
      * @pre numdias >=1
-     * @param date fecha de rejistro del alquiler
+     * @param date fecha de registro del alquiler
      * @param docu identificacion de a quien se le cargara el alquiler
      * @param item el identificador del item a alquilar
      * @param numdias el numero de dias que se le prestara el item
