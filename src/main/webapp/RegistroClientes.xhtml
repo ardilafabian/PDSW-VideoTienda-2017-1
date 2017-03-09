@@ -43,6 +43,9 @@
                 <p:column headerText="Email">
                     <h:outputText value="#{cliente.email}"/>
                 </p:column>
+                <p:column style="width:150px">
+                    <p:commandButton action ="RegistroClienteItem.xhtml" title="Solicitar Item" value="Solicitar Item" iconPos="center"/>
+                </p:column>
             </p:dataTable>
         </h:form>
         
@@ -70,6 +73,7 @@
                         <p:inputText id="email" value="#{dtClientes.emailCliente}" />
                     </p:panelGrid>
                     
+                    <!--TODO: Adicionar un expaciuon entre la tablar y el boton de adicionar para mejor estética -->
                     <center>
                         <p:commandButton update=":tablaCliente" oncomplete="PF('addClientDialog').hide()" actionListener="#{dtClientes.registrarCliente()}" value="Adicionar" iconPos="center"/>
                     </center>
