@@ -43,8 +43,10 @@
                 <p:column headerText="Email">
                     <h:outputText value="#{cliente.email}"/>
                 </p:column>
-                <p:column style="width:150px">
-                    <p:commandButton action ="RegistroClienteItem.xhtml" title="Solicitar Item" value="Solicitar Item" iconPos="center"/>
+                <p:column style="width:100px">
+                    <h:commandButton action ="RegistroClienteItem.xhtml" title="Mostrar" value="Mostrar">
+                        <f:param name="id" value="#{cliente.documento}"/>
+                    </h:commandbutton>
                 </p:column>
             </p:dataTable>
         </h:form>
