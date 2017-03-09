@@ -5,6 +5,7 @@
  */
 package edu.eci.pdsw.samples.entities;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -24,6 +25,7 @@ public class Cliente implements Serializable{
     private ArrayList<ItemRentado> rentados; 
 
     public Cliente() {
+        Logger.logMsg(Logger.DEBUG, "Se intancia " + this.getClass().getName());
     }
 
     public Cliente(String nombre, long documento, String telefono, String direccion, String email, boolean vetado, ArrayList<ItemRentado> rentados) {   

@@ -3,9 +3,45 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui" 
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head></h:head>
+    <h:head>
+        <title>Registro de Clientes</title>
+        <style>
+            h2 {
+                margin: 1em 0 0.5em 0;
+                font-weight: 600;
+                font-family: 'Titillium Web', sans-serif;
+                position: relative;
+                text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
+                font-size: 50px;
+                line-height: 50px;
+                color: 	#B22222;
+                border-bottom: 1px solid rgba(53,86,129, 0.3);
+            }
+        </style>
+        <h2>Registro de Clientes</h2>
+    </h:head>
     <h:body>
-        
+        <p:dataTable var="cliente" value="#{dtClientes.clientes}">
+            <p:column headerText="Nombre">
+                <h:outputText value="#{cliente.nombre}"/>
+            </p:column>
+            
+            <p:column headerText="Documento">
+                <h:outputText value="#{cliente.documento}"/>
+            </p:column>
+            
+            <p:column headerText="Telefono">
+                <h:outputText value="#{cliente.telefono}"/>
+            </p:column>
+            
+            <p:column headerText="Direccion">
+                <h:outputText value="#{cliente.direccion}"/>
+            </p:column>
+            
+            <p:column headerText="Email">
+                <h:outputText value="#{cliente.email}"/>
+            </p:column>
+        </p:dataTable>
   
     </h:body>
 </html>
