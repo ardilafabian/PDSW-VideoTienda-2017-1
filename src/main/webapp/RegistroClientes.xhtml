@@ -20,28 +20,61 @@
         </style>
         <h2>Registro de Clientes</h2>
     </h:head>
+    
     <h:body>
-        <p:dataTable var="cliente" value="#{dtClientes.clientes}">
-            <p:column headerText="Nombre">
-                <h:outputText value="#{cliente.nombre}"/>
-            </p:column>
-            
-            <p:column headerText="Documento">
-                <h:outputText value="#{cliente.documento}"/>
-            </p:column>
-            
-            <p:column headerText="Telefono">
-                <h:outputText value="#{cliente.telefono}"/>
-            </p:column>
-            
-            <p:column headerText="Direccion">
-                <h:outputText value="#{cliente.direccion}"/>
-            </p:column>
-            
-            <p:column headerText="Email">
-                <h:outputText value="#{cliente.email}"/>
-            </p:column>
-        </p:dataTable>
-  
+        <h:form id="tablaCliente">
+            <p:dataTable var="cliente" value="#{dtClientes.clientes}">
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{cliente.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Documento">
+                    <h:outputText value="#{cliente.documento}"/>
+                </p:column>
+
+                <p:column headerText="Telefono">
+                    <h:outputText value="#{cliente.telefono}"/>
+                </p:column>
+
+                <p:column headerText="Direccion">
+                    <h:outputText value="#{cliente.direccion}"/>
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="#{cliente.email}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+        <center>
+            <p:commandButton update=":itemPopup:addClientPanel" oncomplete="PF('addClientDialog').show()" title="Adicionar" value="Adicionar" iconPos="center"/>
+        </center>
+        
+        <h:form id="itemPopup">
+            <p:dialog id="dialog" header="Adicionar Cliente" showEffect="pop" widgetVar="addClientDialog" modal="true" resizable="false">
+                <p:outputPanel id="addClientPanel">
+                    <p:panelGrid columns="2" columnClasses="label,value">
+                        <p:outputLabel for="name" value="Name: " />
+                        <h:inputText id="name" value="#{dtClientes.nombreCliente}" style="font-weight:bold" />
+
+                        <p:outputLabel for="document" value="Documento: "/>
+                        <p:inputText id="document" value="#{dtClientes.documentoCliente}" />
+                        
+                        <p:outputLabel for="direction" value="Direccion: "/>
+                        <p:inputText id="direction" value="#{dtClientes.direccionCliente}" />
+                        
+                        <p:outputLabel for="phone" value="Telefono: "/>
+                        <p:inputText id="phone" value="#{dtClientes.telefonoCliente}" />
+                        
+                        <p:outputLabel for="email" value="Email: "/>
+                        <p:inputText id="email" value="#{dtClientes.emailCliente}" />
+                    </p:panelGrid>
+                    
+                    <center>
+                        <p:commandButton update=":tablaCliente" oncomplete="PF('addClientDialog').hide()" actionListener="#{dtClientes.registrarCliente()}" value="Adicionar" iconPos="center"/>
+                    </center>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
     </h:body>
 </html>
