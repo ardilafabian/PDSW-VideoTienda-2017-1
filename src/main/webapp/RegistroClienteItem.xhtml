@@ -8,7 +8,13 @@
     </h:head>
 
     <h:body>
-        It Works!
+        <h:form id="itemsCliente">
+            <p:dataTable var="itemR" value="#{AlquilerItems.items}">
+                <p:column headerText="Item">
+                    <h:outputText value="#{itemR.item.nombre}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </h:body>
 
 </html>

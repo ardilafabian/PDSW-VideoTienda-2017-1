@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.*;
 
 /**
  *
@@ -26,6 +27,7 @@ public class ClientesBean implements Serializable {
     ServiciosAlquiler sp = ServiciosAlquiler.getInstance();
     
     Cliente clienteAgregar;
+    private long clientId;
     
     public ClientesBean() {
         Logger.logMsg(Logger.DEBUG, "Se instancia " + this.getClass().getName());
@@ -35,6 +37,15 @@ public class ClientesBean implements Serializable {
     @PostConstruct
     public void init() {
         
+    }
+    
+    public String changeView(long id) {
+        this.clientId = id;
+        return "RegistroClienteItem.xhtml";
+    }
+    
+    public long getClientId() {
+        return clientId;
     }
     
     public List<Cliente> getClientes() throws ExcepcionServiciosAlquiler {
