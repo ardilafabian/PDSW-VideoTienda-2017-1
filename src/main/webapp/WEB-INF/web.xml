@@ -21,4 +21,18 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <managed-bean>
+        <managed-bean-name>ClientesBean</managed-bean-name>
+        <managed-bean-class>fqn.to.ClientesBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>AlquilerItemsBean</managed-bean-name>
+        <managed-bean-class>fqn.to.AlquilerItemsBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>ClientesBean</property-name>
+            <value>#{ClientesBean}</value>
+        </managed-property>
+    </managed-bean>
 </web-app>

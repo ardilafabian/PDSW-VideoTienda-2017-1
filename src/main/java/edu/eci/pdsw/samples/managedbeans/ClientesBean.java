@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.*;
 
@@ -21,13 +22,13 @@ import javax.faces.context.*;
  * @author skinman95
  */
 @ManagedBean(name = "dtClientes")
-@ViewScoped
+@SessionScoped
 public class ClientesBean implements Serializable {
     
     ServiciosAlquiler sp = ServiciosAlquiler.getInstance();
     
     Cliente clienteAgregar;
-    private long clientId;
+    public long clientId;
     
     public ClientesBean() {
         Logger.logMsg(Logger.DEBUG, "Se instancia " + this.getClass().getName());
@@ -41,6 +42,7 @@ public class ClientesBean implements Serializable {
     
     public String changeView(long id) {
         this.clientId = id;
+        Logger.logMsg(Logger.DEBUG, "*Id del usuario: "+clientId);
         return "RegistroClienteItem.xhtml";
     }
     
