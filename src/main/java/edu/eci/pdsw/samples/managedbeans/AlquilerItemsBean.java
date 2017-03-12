@@ -28,7 +28,7 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class AlquilerItemsBean implements Serializable {
 
-    @ManagedProperty(value="#{ClientesBean}")
+    @ManagedProperty(value="#{dtClientes}")
     private ClientesBean clientBean;
     
     ServiciosAlquiler sp = ServiciosAlquiler.getInstance();
@@ -37,14 +37,17 @@ public class AlquilerItemsBean implements Serializable {
     public AlquilerItemsBean() {
         Logger.logMsg(Logger.DEBUG, "Id del cliente: "+clientId);
         Logger.logMsg(Logger.DEBUG, "Se insancia " + this.getClass().getName());
-        Logger.logMsg(Logger.DEBUG, "Nombre del bean: "+clientBean.getClass().getName());
+        //Logger.logMsg(Logger.DEBUG, "Nombre del bean: "+clientBean.getClass().getName());
         Logger.logMsg(Logger.DEBUG, "Se intenta asignar id del usuario: "/*clientBean.getClientId()*/);
-        this.clientId = clientBean.clientId;
-        Logger.logMsg(Logger.DEBUG, "Se asigna el id del usuario: "+clientId);
+        //this.clientId = clientBean.clientId;
+        Logger.logMsg(Logger.DEBUG, "Se asigna el id del usuario: " + clientId);
     }
     
-    /*@PostConstruct*/
+    @PostConstruct
     public void init() {
+        Logger.logMsg(Logger.DEBUG, "Se ejecuta metodo init de post construccion");
+        this.clientId = clientBean.getClientId();
+        Logger.logMsg(Logger.DEBUG, "Se obtiene el id del cliente de clienteBean: " + clientId);
     }
     
     public ClientesBean getClientBean(){

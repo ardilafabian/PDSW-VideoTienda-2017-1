@@ -28,7 +28,7 @@ public class ClientesBean implements Serializable {
     ServiciosAlquiler sp = ServiciosAlquiler.getInstance();
     
     Cliente clienteAgregar;
-    public long clientId;
+    private long clientId;
     
     public ClientesBean() {
         Logger.logMsg(Logger.DEBUG, "Se instancia " + this.getClass().getName());
