@@ -5,6 +5,32 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Registro de Cliente</title>
+        <style>
+            h2 {
+                margin: 1em 0 0.5em 0;
+                font-weight: 600;
+                font-family: 'Titillium Web', sans-serif;
+                position: relative;
+                text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
+                font-size: 25px;
+                line-height: 50px;
+                color: 	#000000;
+                <!--border-bottom: 1px solid rgba(53,86,129, 0.3);-->
+            }
+            h1 {
+                margin: 1em 0 0.5em 0;
+                font-weight: 600;
+                font-family: 'Titillium Web', sans-serif;
+                position: relative;
+                text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
+                font-size: 40px;
+                line-height: 50px;
+                color: 	#B22222;
+                <!--border-bottom: 1px solid rgba(53,86,129, 0.3);-->
+            }
+        </style>
+        <h2 style="text-align:left;float:left;">Cliente:</h2>
+        <h1 style="text-align:left;float:left;">#{AlquilerItems.clientName}</h1>
     </h:head>
 
     <h:body>
@@ -30,6 +56,16 @@
                 </p:column>
             </p:dataTable>
         </h:form>
+        <div>
+            <p>
+                
+            </p>
+        </div>
+        
+        <center>
+            <p:commandButton action="ResgistroClientes.xhtml" value="Volver" title="Volver" iconPos="center"/>
+            <p:commandButton value="Rentar Item" title="Rentar" iconPos="center"/>
+        </center>
     </h:body>
 
 </html>

@@ -47,6 +47,10 @@ public class AlquilerItemsBean implements Serializable {
         Logger.logMsg(Logger.DEBUG, "Se obtiene el id del cliente de clienteBean: " + clientId);
     }
     
+    public String getClientName() throws ExcepcionServiciosAlquiler {
+        return sp.consultarCliente(clientId).getNombre();
+    }
+    
     public ClientesBean getClientBean(){
         return clientBean;
     }
