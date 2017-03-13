@@ -11,7 +11,22 @@
         <h:form id="itemsCliente">
             <p:dataTable var="itemR" value="#{AlquilerItems.items}">
                 <p:column headerText="Item">
-                    <h:outputText value="#{itemR.item.nombre}" />
+                    <h:outputText value="#{itemR.nombre}" />
+                </p:column>
+                <p:column headerText="Inicio Renta">
+                    <center>
+                        <h:outputText value="#{itemR.fechainiciorenta}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Fin Renta">
+                    <center>
+                        <h:outputText value="#{itemR.fechafinrenta}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Multa">
+                    <center>
+                        <h:outputText value="$ #{AlquilerItems.getMulta(itemR)}" />
+                    </center>
                 </p:column>
             </p:dataTable>
         </h:form>

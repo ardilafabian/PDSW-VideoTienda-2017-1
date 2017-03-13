@@ -36,11 +36,14 @@ public class ItemRentado implements Serializable{
         return item;
     }
    
+    public String getNombre() {
+        return item.getNombre();
+    }
     
     public void setItem(Item item) {
         this.item = item;
     }
-
+    
     public Date getFechainiciorenta() {
         return fechainiciorenta;
     }
