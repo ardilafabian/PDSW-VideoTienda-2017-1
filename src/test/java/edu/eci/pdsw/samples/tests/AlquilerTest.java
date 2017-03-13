@@ -83,8 +83,9 @@ public class AlquilerTest {
     public void CE3test() throws ExcepcionServiciosAlquiler {
         ServiciosAlquiler sa=ServiciosAlquilerItemsStub.getInstance();
         
-        Item i1=new Item(sa.consultarTipoItem(1), 55, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");        
-        sa.registrarCliente(new Cliente("Juan Perez",9843,"24234","calle 123","aa@gmail.com"));
+        Item i1=new Item(sa.consultarTipoItem(1), 55, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");
+        // FIXME metodo registrarCliente lanza excepcion ExcepcionServiciosAlquiler "ya se registro"
+        sa.registrarCliente(new Cliente("Juan Perez",9843,"24234","calle 123","aa@gmail.com")); 
         sa.registrarItem(i1);
         
         Item item=sa.consultarItem(55);

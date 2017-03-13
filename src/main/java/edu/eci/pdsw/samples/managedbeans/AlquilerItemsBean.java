@@ -43,8 +43,12 @@ public class AlquilerItemsBean implements Serializable {
     @PostConstruct
     public void init() {
         Logger.logMsg(Logger.DEBUG, "Se ejecuta metodo init de post construccion");
-        this.clientId = clientBean.getClientId();
-        Logger.logMsg(Logger.DEBUG, "Se obtiene el id del cliente de clienteBean: " + clientId);
+        if (clientBean != null) {
+            this.clientId = clientBean.getClientId();
+            Logger.logMsg(Logger.DEBUG, "Se obtiene el id del cliente de clienteBean: " + clientId);
+        } else {
+            Logger.logMsg(Logger.ERROR, "Bean de cliente es null");
+        }
     }
     
     public String getClientName() throws ExcepcionServiciosAlquiler {
