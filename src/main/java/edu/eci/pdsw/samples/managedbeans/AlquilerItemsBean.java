@@ -13,13 +13,9 @@ import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 import javax.annotation.PostConstruct;
-import javax.el.ELContext;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -34,6 +30,10 @@ public class AlquilerItemsBean implements Serializable {
     
     ServiciosAlquiler sp = ServiciosAlquiler.getInstance();
     long clientId;
+    
+    private int itemId;
+    private long rentCost;
+    private int rentDays;
     
     public AlquilerItemsBean() {
         Logger.logMsg(Logger.DEBUG, "Id del cliente: "+clientId);
@@ -67,16 +67,25 @@ public class AlquilerItemsBean implements Serializable {
         return sp.consultarItemsCliente(this.clientId);
     }
     
-    public long getMulta(ItemRentado itr) {
-        Calendar cal = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-        cal.setTime(itr.getFechafinrenta());
-        now.setTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-        int res = daysBetween(cal.getTime(), now.getTime()); 
-        return res > 0 ? res*itr.getItem().getTarifaxDia() : 0;
+    public long getMulta(ItemRentado itr) throws ExcepcionServiciosAlquiler {
+        return sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
     }
     
-    public int daysBetween(Date d1, Date d2){
-             return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    public void setRentedItem(int id) {
+        this.itemId = id;
+    }
+    
+    public void setDate(int days) throws ExcepcionServiciosAlquiler {
+        this.rentDays = days;
+        this.rentCost = sp.consultarCostoAlquiler(itemId, days);
+    }
+    
+    public long getRentCost() {
+        return rentCost;
+    }
+    
+    public void setRent() throws ExcepcionServiciosAlquiler {
+        Date dt = new Date();
+        sp.registrarAlquilerCliente((java.sql.Date) dt, clientId, sp.consultarItem(itemId), rentDays);
     }
 }

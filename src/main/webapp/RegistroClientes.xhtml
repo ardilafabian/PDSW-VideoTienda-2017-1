@@ -45,7 +45,7 @@
                     <h:outputText value="#{cliente.email}"/>
                 </p:column>
                 <p:column style="width:100px">
-                    <h:commandButton action ="#{dtClientes.changeView(cliente.documento)}" title="Mostrar" value="Mostrar" />
+                    <p:commandButton action ="#{dtClientes.changeView(cliente.documento)}" title="Mostrar" value="Mostrar" />
                 </p:column>
             </p:dataTable>
         </h:form>
@@ -80,7 +80,11 @@
                         <p:inputText id="email" value="#{dtClientes.emailCliente}" />
                     </p:panelGrid>
                     
-                    <!--TODO: Adicionar un expaciuon entre la tablar y el boton de adicionar para mejor estética -->
+                    <div>
+                        <p>
+                
+                        </p>
+                    </div>
                     <center>
                         <p:commandButton update=":tablaCliente" oncomplete="PF('addClientDialog').hide()" actionListener="#{dtClientes.registrarCliente()}" value="Adicionar" iconPos="center"/>
                     </center>

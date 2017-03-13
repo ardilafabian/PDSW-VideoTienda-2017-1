@@ -187,7 +187,7 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
     @Override
     public long consultarMultaAlquiler(int iditem,Date fechaDevolucion) throws ExcepcionServiciosAlquiler{
         if (!itemsrentados.containsKey(iditem)){
-            throw new ExcepcionServiciosAlquiler("El item "+iditem+"no esta en alquiler");
+            throw new ExcepcionServiciosAlquiler("El item "+iditem+" no esta en alquiler");
         }
         else{
             ItemRentado ir=itemsrentados.get(iditem);

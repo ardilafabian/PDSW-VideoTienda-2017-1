@@ -4,7 +4,7 @@
       xmlns:p="http://primefaces.org/ui" 
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Registro de Cliente</title>
+        <title>Items Rentados</title>
         <style>
             h2 {
                 margin: 1em 0 0.5em 1em;
@@ -25,6 +25,9 @@
                 font-size: 40px;
                 line-height: 50px;
                 color: 	#B22222;
+            }
+            commandButton {
+                margin: 1em 0 0.5em 1em;
             }
         </style>
         <h2 style="text-align:left;float:left;">Cliente:</h2>
@@ -55,6 +58,7 @@
                 </p:column>
             </p:dataTable>
         </h:form>
+        
         <div>
             <p>
                 
@@ -63,8 +67,33 @@
         
         <center>
             <p:commandButton action="RegistroClientes.xhtml" value="Volver" title="Volver" iconPos="center"/>
-            <p:commandButton value="Rentar Item" title="Rentar" iconPos="center"/>
+            <p:commandButton update=":rentPopup:rentItemPanel" oncomplete="PF('rentItemDialog').show()" value="Rentar Item" title="Rentar" iconPos="center"/>
         </center>
+        
+        <h:form id="rentPopup">
+            <p:dialog id="dialog" header="Rentar Item" showEffect="pop" widgetVar="rentItemDialog" modal="true" resizable="false">
+                <p:outputPanel id="rentItemPanel">
+                    <p:panelGrid columns="2" columnClasses="label,value">
+                        <p:outputLabel for="code" value="ID: "/>
+                        <h:inputText id="code" value="#{AlquilerItems.rentedItem}"/>
+                        
+                        <p:outputLabel for="days" value="Número de Dias: "/>
+                        <h:inputText id="days" value="#{AlquilerItems.date}"/>
+                        
+                        <p:outputLabel for="cost" value="Costo Alquiler: "/>
+                        <h:outputText value="$ #{AlquilerItems.rentCost}"/>
+                    </p:panelGrid>
+                    <div>
+                        <p>
+                
+                        </p>
+                    </div>
+                    <center>
+                        <p:commandButton update="itemsCliente" oncomplete="PF('rentItemDialog').hide()" actionListener="#{AlquilerItems.rent}" value="Rentar" iconPos="center"/>
+                    </center>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
     </h:body>
 
 </html>
