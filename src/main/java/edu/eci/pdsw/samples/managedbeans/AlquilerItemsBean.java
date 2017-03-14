@@ -75,13 +75,17 @@ public class AlquilerItemsBean implements Serializable {
         this.itemId = id;
     }
     
-    /*public String getRentedItem() {
-        return "Ha!";
-    }*/
+    public String getRentedItem() {
+        return "";
+    }
     
     public void setDate(int days) throws ExcepcionServiciosAlquiler {
         this.rentDays = days;
         this.rentCost = sp.consultarCostoAlquiler(itemId, days);
+    }
+    
+    public String getDate() {
+        return "";
     }
     
     public long getRentCost() {

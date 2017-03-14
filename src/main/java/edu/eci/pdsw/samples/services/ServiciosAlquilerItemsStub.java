@@ -281,6 +281,7 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
         clientes.put(c1.getDocumento(), c1);
         clientes.put(c2.getDocumento(), c2);
         clientes.put(c3.getDocumento(), c3);
+        
         itemsrentados.put(1, ir1);
         itemsrentados.put(2, ir2);
         itemsrentados.put(3, ir3);
