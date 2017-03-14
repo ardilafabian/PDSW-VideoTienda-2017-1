@@ -30,11 +30,12 @@
                 margin: 1em 0 0.5em 1em;
             }
         </style>
-        <h2 style="text-align:left;float:left;">Cliente:</h2>
-        <h1 style="text-align:left;float:left;">#{AlquilerItems.clientName}</h1>
+        
     </h:head>
 
     <h:body>
+        <h2 style="text-align:left;float:left;">Cliente:</h2>
+        <h1 style="text-align:left;float:left;">#{AlquilerItems.clientName}</h1>
         <h:form id="itemsCliente">
             <!-- TODO acomodar nombres para seguir convecion de cammelCasing -->
             <p:dataTable var="itemR" value="#{AlquilerItems.items}">
