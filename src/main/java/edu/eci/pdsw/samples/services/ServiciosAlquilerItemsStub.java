@@ -187,6 +187,10 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
     @Override
     public long consultarMultaAlquiler(int iditem,Date fechaDevolucion) throws ExcepcionServiciosAlquiler{
         if (!itemsrentados.containsKey(iditem)){
+            System.out.println("Items alquilados: ");
+            for (Map.Entry entry : itemsrentados.entrySet()) {
+                System.out.println(entry.getKey()+", "+entry.getValue());
+            }
             throw new ExcepcionServiciosAlquiler("El item "+iditem+" no esta en alquiler");
         }
         else{
@@ -277,6 +281,9 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
         clientes.put(c1.getDocumento(), c1);
         clientes.put(c2.getDocumento(), c2);
         clientes.put(c3.getDocumento(), c3);
+        itemsrentados.put(1, ir1);
+        itemsrentados.put(2, ir2);
+        itemsrentados.put(3, ir3);
 
     }
 

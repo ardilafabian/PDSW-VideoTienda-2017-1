@@ -75,10 +75,10 @@
                 <p:outputPanel id="rentItemPanel">
                     <p:panelGrid columns="2" columnClasses="label,value">
                         <p:outputLabel for="code" value="ID: "/>
-                        <h:inputText id="code" value="#{AlquilerItems.rentedItem}"/>
+                        <p:inputText id="code" value="#{AlquilerItems.rentedItem}"/>
                         
                         <p:outputLabel for="days" value="Número de Dias: "/>
-                        <h:inputText id="days" value="#{AlquilerItems.date}"/>
+                        <p:inputText id="days" value="#{AlquilerItems.date}" />
                         
                         <p:outputLabel for="cost" value="Costo Alquiler: "/>
                         <h:outputText value="$ #{AlquilerItems.rentCost}"/>
@@ -89,7 +89,7 @@
                         </p>
                     </div>
                     <center>
-                        <p:commandButton update="itemsCliente" oncomplete="PF('rentItemDialog').hide()" actionListener="#{AlquilerItems.rent}" value="Rentar" iconPos="center"/>
+                        <p:commandButton update=":itemsCliente" oncomplete="PF('rentItemDialog').hide()" actionListener="#{AlquilerItems.alquilarItem}" value="Rentar" iconPos="center"/>
                     </center>
                 </p:outputPanel>
             </p:dialog>
