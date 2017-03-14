@@ -11,6 +11,7 @@ import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import java.io.Serializable;
 import java.time.*;
+import java.sql.Date;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -75,8 +76,8 @@ public class AlquilerItemsBean implements Serializable {
         this.itemId = id;
     }
     
-    public String getRentedItem() {
-        return "";
+    public int getRentedItem() {
+        return 0;
     }
     
     public void setDate(int days) throws ExcepcionServiciosAlquiler {
@@ -85,8 +86,8 @@ public class AlquilerItemsBean implements Serializable {
         Logger.logMsg(Logger.DEBUG, "Agrega costo de la renta "+rentCost);
     }
     
-    public String getDate() {
-        return "";
+    public int getDate() {
+        return 0;
     }
     
     public long getRentCost() {
@@ -94,7 +95,7 @@ public class AlquilerItemsBean implements Serializable {
     }
     
     public void alquilarItem() throws ExcepcionServiciosAlquiler {
-        Date dt = new Date();
-        sp.registrarAlquilerCliente((java.sql.Date) dt, clientId, sp.consultarItem(itemId), rentDays);
+        java.util.Date dt = new java.util.Date();
+        sp.registrarAlquilerCliente(new java.sql.Date(dt.getTime()), clientId, sp.consultarItem(itemId), rentDays);
     }
 }
