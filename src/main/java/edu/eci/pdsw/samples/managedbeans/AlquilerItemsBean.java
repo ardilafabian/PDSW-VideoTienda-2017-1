@@ -82,6 +82,7 @@ public class AlquilerItemsBean implements Serializable {
     public void setDate(int days) throws ExcepcionServiciosAlquiler {
         this.rentDays = days;
         this.rentCost = sp.consultarCostoAlquiler(itemId, days);
+        Logger.logMsg(Logger.DEBUG, "Agrega costo de la renta "+rentCost);
     }
     
     public String getDate() {
