@@ -119,6 +119,8 @@ public class AlquilerItemsBean implements Serializable {
     
     public void alquilarItem() throws ExcepcionServiciosAlquiler {
         java.util.Date dt = new java.util.Date();
+        Logger.logMsg(Logger.DEBUG, "Se alquila item para usuario: " + clientId + 
+                " el item: " + (sp.consultarItem(itemId) != null ? sp.consultarItem(itemId).getNombre() : "null"));
         sp.registrarAlquilerCliente(new java.sql.Date(dt.getTime()), clientId, sp.consultarItem(itemId), rentDays);
     }
 }

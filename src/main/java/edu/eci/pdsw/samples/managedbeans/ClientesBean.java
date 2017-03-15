@@ -61,6 +61,7 @@ public class ClientesBean implements Serializable {
             sp.registrarCliente(clienteAgregar);
             Logger.logMsg(Logger.DEBUG, "Se registra el cliente " + 
                     clienteAgregar.getNombre() != null ? clienteAgregar.getNombre() : "null");
+            clienteAgregar = new Cliente();
         } catch (ExcepcionServiciosAlquiler ex) {
             Logger.logMsg(Logger.ERROR, ex.getMessage());
         }

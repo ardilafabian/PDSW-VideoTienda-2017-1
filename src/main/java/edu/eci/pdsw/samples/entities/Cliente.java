@@ -25,6 +25,7 @@ public class Cliente implements Serializable{
     private ArrayList<ItemRentado> rentados; 
 
     public Cliente() {
+        this("", 0, "", "", "");
         Logger.logMsg(Logger.DEBUG, "Se intancia " + this.getClass().getName());
     }
 
