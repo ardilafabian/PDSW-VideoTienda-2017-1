@@ -74,12 +74,17 @@
         <h:form id="rentPopup">
             <p:dialog id="dialog" header="Rentar Item" showEffect="pop" widgetVar="rentItemDialog" modal="true" resizable="false">
                 <p:outputPanel id="rentItemPanel">
+                    <p:messages for="noId" showDetail="true" autoUpdate="true" closable="true"/>
                     <p:panelGrid columns="2" columnClasses="label,value">
                         <p:outputLabel for="code" value="ID: "/>
-                        <p:inputText id="code" value="#{AlquilerItems.rentedItem}"/>
+                        <p:inputText id="code" value="#{AlquilerItems.rentedItem}">
+                            <p:ajax update="cost" process="@this"/>
+                        </p:inputText>
                         
                         <p:outputLabel for="days" value="Número de Dias: "/>
-                        <p:inputText id="days" value="#{AlquilerItems.date}" />
+                        <p:inputText id="days" value="#{AlquilerItems.date}">
+                            <p:ajax update="cost" process="@this"/>
+                        </p:inputText>
                         
                         <p:outputLabel for="cost" value="Costo Alquiler: "/>
                         <h:outputText id="cost" value="$ #{AlquilerItems.rentCost}"/>
