@@ -21,5 +21,5 @@ public interface ClienteDAO {
     
     public List<Cliente> loadClientes() throws PersistenceException;
     
-    public List<ItemRentado> loadItemsCliente(long doc) throws PersistenceException;
+    public List<ItemRentado> loadItemsCliente(long doc) throws PersistenceException; // TODO eliminar: redundancia
 }

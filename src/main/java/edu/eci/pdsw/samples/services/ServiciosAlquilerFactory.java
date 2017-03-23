@@ -24,7 +24,7 @@ public class ServiciosAlquilerFactory {
 
     private static ServiciosAlquilerFactory instance = new ServiciosAlquilerFactory();
     
-    private static final boolean TESTING = true;
+    private static final boolean TESTING = false;
     
     private static Injector injector;
     
