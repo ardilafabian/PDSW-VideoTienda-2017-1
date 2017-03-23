@@ -74,7 +74,11 @@ public class AlquilerItemsBean implements Serializable {
     }
     
     public long getMulta(ItemRentado itr) throws ExcepcionServiciosAlquiler {
-        return sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
+        if (itr != null) {
+            return sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
+        } else {
+            throw new ExcepcionServiciosAlquiler("getMulta: El item rentado es null");
+        }
     }
     
     public void setRentedItem(int id) {

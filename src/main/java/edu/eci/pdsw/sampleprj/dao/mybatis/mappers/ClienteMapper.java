@@ -1,6 +1,8 @@
 package edu.eci.pdsw.sampleprj.dao.mybatis.mappers;
 
 import edu.eci.pdsw.samples.entities.Cliente;
+import edu.eci.pdsw.samples.entities.Item;
+import edu.eci.pdsw.samples.entities.ItemRentado;
 import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +27,8 @@ public interface ClienteMapper {
             @Param("idItem") int idit, 
             @Param("fechaInicio") Date fechainicio,
             @Param("fechaFin") Date fechafin);
+    
+    public List<ItemRentado> consultarItemsCliente(@Param("documento") long doc);
 
     /**
      * Consultar todos los clientes

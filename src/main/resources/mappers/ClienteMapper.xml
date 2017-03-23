@@ -87,6 +87,38 @@
             #{cliente.vetado});
     </insert>
     
+    <select parameterType="map" id="consultarItemsCliente" resultMap="ItemRentadoResult">
+        select
+    
+            c.nombre as cl_nombre,
+            c.documento as cl_documento,
+            c.telefono as cl_telefono,
+            c.direccion as cl_direccion,
+            c.email as cl_email,
+            c.vetado as cl_vetado,
+
+            ir.id as ir_id,
+            ir.CLIENTES_documento as ir_documentoCliente,
+            ir.fechainiciorenta as ir_fechaIniciorenta,
+            ir.fechafinrenta as ir_fechaFinRenta,
+
+            i.id as it_id,
+            i.nombre as it_nombre,
+            i.descripcion as it_descripcion,
+            i.fechalanzamiento as it_fechaLanzamiento,
+            i.tarifaxdia as it_tarifaXDia,
+            i.formatorenta as it_formatoRenta,
+            i.genero as it_genero,
+                
+            ti.id as tipo_id,
+            ti.descripcion as tipo_descripcion 
+        FROM VI_CLIENTES as c 
+        left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento 
+        left join VI_ITEMS as i on ir.ITEMS_id=i.id 
+        left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id 
+        WHERE c.documento = #{documento}
+    </select>
+    
     <resultMap type="Cliente" id="ClienteResult">
         <id property="documento" column="cl_documento"/>
         <result property="nombre" column="cl_nombre"/>
