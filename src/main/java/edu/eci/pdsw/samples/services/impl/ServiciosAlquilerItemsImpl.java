@@ -52,7 +52,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
         try {
-            return daoCliente.load();
+            return daoCliente.loadClientes();
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar los clientes",ex);
         }
