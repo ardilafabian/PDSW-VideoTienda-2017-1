@@ -5,7 +5,6 @@
  */
 package edu.eci.pdsw.samples.entities;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,8 +24,6 @@ public class Cliente implements Serializable{
     private ArrayList<ItemRentado> rentados; 
 
     public Cliente() {
-        this("", 0, "", "", "");
-        Logger.logMsg(Logger.DEBUG, "Se intancia " + this.getClass().getName());
     }
 
     public Cliente(String nombre, long documento, String telefono, String direccion, String email, boolean vetado, ArrayList<ItemRentado> rentados) {   
@@ -105,6 +102,11 @@ public class Cliente implements Serializable{
 
     public void setRentados(ArrayList<ItemRentado> Rentados) {
         this.rentados = Rentados;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "nombre=" + nombre + ", documento=" + documento + ", rentados=\n\t" + rentados + '}';
     }
 
    

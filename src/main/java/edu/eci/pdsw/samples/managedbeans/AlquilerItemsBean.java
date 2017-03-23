@@ -10,6 +10,7 @@ import edu.eci.pdsw.samples.entities.Item;
 import edu.eci.pdsw.samples.entities.ItemRentado;
 import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquiler;
+import edu.eci.pdsw.samples.services.ServiciosAlquilerFactory;
 import java.io.Serializable;
 import java.time.*;
 import java.sql.Date;
@@ -33,7 +34,7 @@ public class AlquilerItemsBean implements Serializable {
     @ManagedProperty(value="#{dtClientes}")
     private ClientesBean clientBean;
     
-    ServiciosAlquiler sp = ServiciosAlquiler.getInstance();
+    ServiciosAlquiler sp = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
     long clientId;
     
     private int itemId;

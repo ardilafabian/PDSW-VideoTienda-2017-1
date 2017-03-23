@@ -8,6 +8,7 @@ package edu.eci.pdsw.samples.tests;
 import edu.eci.pdsw.samples.entities.Cliente;
 import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquiler;
+import edu.eci.pdsw.samples.services.ServiciosAlquilerFactory;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -40,7 +41,7 @@ public class ClientesTest {
     	Cliente c = new Cliente("Alejandro Anzola Avila", 1019115165, "304 602 3862",
         "Suba Pinar Calle XXX A No YY - ZZ Casa 333", "alejandro.anzola@mail.escuelaing.edu.co");
         
-        ServiciosAlquiler sa = ServiciosAlquiler.getInstance();
+        ServiciosAlquiler sa = ServiciosAlquilerFactory.getInstance().getServiciosAlquilerTesting();
         
         sa.registrarCliente(c);
         

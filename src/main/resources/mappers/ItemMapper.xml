@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper">
+    <!-- insertarItem -->
+    
+    <insert parameterType="map" id="insertarItem">
+        insert into VI_ITEMS (id, nombre, descripcion, fechalanzamiento, tarifaxdia, formatorenta, genero, TIPOITEM_id)
+        values (#{item.id}, 
+            #{item.nombre}, 
+            #{item.descripcion}, 
+            #{item.fechaLanzamiento}, 
+            #{item.tarifaxDia}, 
+            #{item.formatoRenta},
+            #{item.genero},
+            #{item.tipo.ID});
+    </insert>
+
+    <!-- consultarItem -->
+    <select parameterType="map" id="consultarItem" resultMap="ItemResult">
+        select id, nombre, descripcion, fechalanzamiento, tarifaxdia, formatorenta, genero, TIPOITEM_id
+        from VI_ITEMS 
+        where id = #{idItem}
+    </select>
+    
+    <!-- getItems -->
+    <select parameterType="map" id="getItems" resultMap="ItemResult">
+        select i.id as id,
+            nombre, 
+            i.descripcion as descripcion, 
+            fechaLanzamiento, 
+            tarifaXDia, 
+            formatoRenta, 
+            genero, 
+            TIPOITEM_id as tipo_id, 
+            t.descripcion as tipo_descripcion
+        from VI_ITEMS as i join VI_TIPOITEM as t on TIPOITEM_id = t.id
+    </select>
+    
+    
+    <resultMap type="Item" id="ItemResult">
+        <id property="id" column="id"/>
+        <result property="nombre" column="nombre"/>
+        <result property="descripcion" column="descripcion"/>
+        <result property="fechaLanzamiento" column="fechaLanzamiento"/>
+        <result property="tarifaxDia" column="tarifaXDia"/>
+        <result property="formatoRenta" column="formatoRenta"/>
+        <result property="genero" column="genero"/>
+        <association property="tipo" columnPrefix="tipo_" javaType="TipoItem"/>
+    </resultMap>
+    
+    <resultMap type="TipoItem" id="TipoItemResult">
+        <id property="id" column="id"/>
+        <result property="descripcion" column="descripcion"/>
+    </resultMap>
+    
+</mapper>

@@ -16,7 +16,7 @@ public class Test {
 
     public static void main(String a[]) throws ExcepcionServiciosAlquiler{
         
-        ServiciosAlquiler sa=ServiciosAlquilerItemsStub.getInstance();
+        ServiciosAlquiler sa=ServiciosAlquilerFactory.getInstance().getServiciosAlquilerTesting();
         
         Item i1=new Item(sa.consultarTipoItem(1), 1, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");
         //Item i2=new Item(sa.consultarTipoItem(1), 2, "Halo 3", "Halo 3 es un videojuego de disparos en primera persona desarrollado por Bungie Studios.", java.sql.Date.valueOf("2007-09-08"), 3000, "DVD", "Shooter");

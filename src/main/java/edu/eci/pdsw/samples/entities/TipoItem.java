@@ -43,4 +43,11 @@ public class TipoItem implements Serializable{
     public void setDescripcion(String Descripcion) {
         this.descripcion = Descripcion;
     }
+
+    @Override
+    public String toString() {
+        return "TipoItem{" + "id=" + id + ", descripcion=" + descripcion + '}';
+    }
+    
+    
 }

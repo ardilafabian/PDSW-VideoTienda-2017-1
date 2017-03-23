@@ -1,10 +1,11 @@
-package edu.eci.pdsw.samples.services;
+package edu.eci.pdsw.samples.services.impl;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import edu.eci.pdsw.samples.entities.Cliente;
 import edu.eci.pdsw.samples.entities.Item;
 import edu.eci.pdsw.samples.entities.ItemRentado;
 import edu.eci.pdsw.samples.entities.TipoItem;
+import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
+import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -20,7 +21,7 @@ import java.util.Map;
  *
  * @author 2106913
  */
-public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Serializable{
+public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
     
     private static final int MULTA_DIARIA=5000;
     private final static long MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
@@ -35,15 +36,12 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
     
    
     public ServiciosAlquilerItemsStub() {
-        Logger.setLevel(Logger.DEBUG);
-        Logger.logMsg(Logger.DEBUG, "Se instancia " + this.getClass().getName());
-        
         clientes = new HashMap<>();
         itemsDisponibles = new HashMap<>();
         itemsrentados = new HashMap<>();
         tipositems = new HashMap<>();
         mapaPrestamosPorIdCliente=new HashMap<>();
-        poblar(); // TODO : remover
+        //poblar();
     }
 
     @Override
@@ -139,7 +137,7 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
         LocalDate ld=date.toLocalDate();
         LocalDate ld2=ld.plusDays(numdias);
         
-        ItemRentado ir=new ItemRentado(item,date,java.sql.Date.valueOf(ld2));
+        ItemRentado ir=new ItemRentado(0,item,date,java.sql.Date.valueOf(ld2));
 
         if (clientes.containsKey(docu)) {
             Cliente c = clientes.get(docu);
@@ -187,11 +185,7 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
     @Override
     public long consultarMultaAlquiler(int iditem,Date fechaDevolucion) throws ExcepcionServiciosAlquiler{
         if (!itemsrentados.containsKey(iditem)){
-            System.out.println("Items alquilados: ");
-            for (Map.Entry entry : itemsrentados.entrySet()) {
-                System.out.println(entry.getKey()+", "+entry.getValue());
-            }
-            throw new ExcepcionServiciosAlquiler("El item "+iditem+" no esta en alquiler");
+            throw new ExcepcionServiciosAlquiler("El item "+iditem+"no esta en alquiler");
         }
         else{
             ItemRentado ir=itemsrentados.get(iditem);
@@ -263,9 +257,9 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
         itemsDisponibles.put(6, i6);
         
         
-        ItemRentado ir1=new ItemRentado(i1, java.sql.Date.valueOf("2017-01-01"), java.sql.Date.valueOf("2017-03-12"));
-        ItemRentado ir2=new ItemRentado(i2, java.sql.Date.valueOf("2017-01-04"), java.sql.Date.valueOf("2017-04-7"));
-        ItemRentado ir3=new ItemRentado(i1, java.sql.Date.valueOf("2017-01-07"), java.sql.Date.valueOf("2017-07-12"));
+        ItemRentado ir1=new ItemRentado(0,i1, java.sql.Date.valueOf("2017-01-01"), java.sql.Date.valueOf("2017-03-12"));
+        ItemRentado ir2=new ItemRentado(0,i2, java.sql.Date.valueOf("2017-01-04"), java.sql.Date.valueOf("2017-04-7"));
+        ItemRentado ir3=new ItemRentado(0,i1, java.sql.Date.valueOf("2017-01-07"), java.sql.Date.valueOf("2017-07-12"));
         
         ArrayList<ItemRentado> list1 = new ArrayList<>();
         list1.add(ir1);
@@ -281,10 +275,6 @@ public class ServiciosAlquilerItemsStub extends ServiciosAlquiler implements Ser
         clientes.put(c1.getDocumento(), c1);
         clientes.put(c2.getDocumento(), c2);
         clientes.put(c3.getDocumento(), c3);
-        
-        itemsrentados.put(1, ir1);
-        itemsrentados.put(2, ir2);
-        itemsrentados.put(3, ir3);
 
     }
 
