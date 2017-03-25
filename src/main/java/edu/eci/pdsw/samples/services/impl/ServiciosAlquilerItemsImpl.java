@@ -16,7 +16,6 @@ import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -116,6 +115,15 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public TipoItem consultarTipoItem(int id) throws ExcepcionServiciosAlquiler {
         Item it = this.consultarItem(id);
+        
+        if (it == null) {
+            throw new ExcepcionServiciosAlquiler("Error obteniendo el item " + id);
+        }
+        
+        if (it.getTipo() == null) {
+            throw new ExcepcionServiciosAlquiler("Error obteniendo el tipo del item " + id);
+        }
+        
         return it.getTipo();
     }
 
@@ -126,7 +134,22 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        LocalDate ld = date.toLocalDate();
+        LocalDate ld2 = ld.plusDays(numdias);
+        
+        ItemRentado ir = new ItemRentado(0,item,date,java.sql.Date.valueOf(ld2));
+
+        //Cliente c = this.consultarCliente(docu);
+        //c.getRentados().add(ir); // XXX : es necesario?
+        if (! this.consultarItemsDisponibles().contains(item)) {
+            throw new ExcepcionServiciosAlquiler("El item " + item + " no esta disponible para alquiler");
+        }
+        
+        try {
+            daoCliente.registrarItemRentado(docu, ir);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al registrar item rentado del cliente " + docu, ex);
+        }
     }
 
     @Override

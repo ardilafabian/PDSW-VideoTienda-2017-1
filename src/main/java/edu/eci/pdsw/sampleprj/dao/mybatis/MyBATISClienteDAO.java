@@ -46,4 +46,14 @@ public class MyBATISClienteDAO implements ClienteDAO {
             throw new PersistenceException("Error al consultar los clientes",e);
         }
     }
+
+    @Override
+    public void registrarItemRentado(long doc, ItemRentado i) throws PersistenceException {
+        clienteMapper.agregarItemRentadoACliente(doc, 
+                i.getItem().getId(), 
+                i.getFechainiciorenta(), 
+                i.getFechafinrenta());
+    }
+
+    
 }

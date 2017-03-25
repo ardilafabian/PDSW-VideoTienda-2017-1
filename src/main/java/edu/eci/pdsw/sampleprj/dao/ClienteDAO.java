@@ -6,6 +6,7 @@
 package edu.eci.pdsw.sampleprj.dao;
 
 import edu.eci.pdsw.samples.entities.Cliente;
+import edu.eci.pdsw.samples.entities.Item;
 import edu.eci.pdsw.samples.entities.ItemRentado;
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface ClienteDAO {
     public Cliente load(int id) throws PersistenceException;
     
     public List<Cliente> loadClientes() throws PersistenceException;
+    
+    public void registrarItemRentado(long doc, ItemRentado i) throws PersistenceException;
 }
