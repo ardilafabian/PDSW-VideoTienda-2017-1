@@ -104,7 +104,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("El item rentado" + iditem + "no tiene item asignado");
         }
         
-        return diasRetraso * item.getItem().getTarifaxDia();
+        return diasRetraso * this.valorMultaRetrasoxDia();
     }
 
     @Override
