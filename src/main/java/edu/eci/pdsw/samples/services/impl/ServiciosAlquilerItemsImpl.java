@@ -2,6 +2,7 @@ package edu.eci.pdsw.samples.services.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.sun.media.jfxmedia.logging.Logger;
 import edu.eci.pdsw.sampleprj.dao.ClienteDAO;
 import edu.eci.pdsw.sampleprj.dao.ItemDAO;
 import edu.eci.pdsw.sampleprj.dao.PersistenceException;
@@ -13,9 +14,11 @@ import edu.eci.pdsw.samples.entities.TipoItem;
 import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * 
@@ -46,7 +49,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cliente c = this.consultarCliente(idcliente);
+        return c.getRentados();
     }
 
     @Override
@@ -74,7 +78,33 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Cliente> clientes = this.consultarClientes();
+        ItemRentado item = null;
+        
+        for (int i = 0; i < clientes.size() && item == null; i++) {
+            List<ItemRentado> items = clientes.get(i).getRentados();
+            for(int j = 0; j < items.size() && item == null; j++) {
+                ItemRentado actual = items.get(j);
+                if (actual.getId() == iditem) {
+                    item = actual;
+                }
+            }
+        }
+        
+        if (item == null) {
+            throw new ExcepcionServiciosAlquiler("El item " + iditem + "no esta en alquiler");
+        }
+            
+        LocalDate fechaMinimaEntrega = item.getFechafinrenta().toLocalDate();
+        LocalDate fechaEntrega = fechaDevolucion.toLocalDate();
+        long diasRetraso = ChronoUnit.DAYS.between(fechaMinimaEntrega, fechaEntrega);
+        
+        if (item.getItem() == null) {
+            Logger.logMsg(Logger.ERROR, "El item rentado " + iditem + " tiene su item asignado como nulo");
+            throw new ExcepcionServiciosAlquiler("El item rentado" + iditem + "no tiene item asignado");
+        }
+        
+        return diasRetraso * item.getItem().getTarifaxDia();
     }
 
     @Override
