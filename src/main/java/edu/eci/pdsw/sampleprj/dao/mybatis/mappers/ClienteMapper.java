@@ -45,4 +45,6 @@ public interface ClienteMapper {
      */
     public boolean agregarCliente(@Param("cliente") Cliente cliente);
     
+    public void vetarCliente(@Param("cliente") long doc, @Param("vetar") int vet);
+    
 }

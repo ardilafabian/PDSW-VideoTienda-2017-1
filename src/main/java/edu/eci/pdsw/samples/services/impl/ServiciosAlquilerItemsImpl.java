@@ -207,7 +207,11 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); // TODO implementar
+        try {
+            daoCliente.vetarCliente(docu, estado);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error el vetar cliente ", ex);
+        }
     }
 
     @Override

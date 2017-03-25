@@ -55,5 +55,14 @@ public class MyBATISClienteDAO implements ClienteDAO {
                 i.getFechafinrenta());
     }
 
+    @Override
+    public void vetarCliente(long docu, boolean estado) throws PersistenceException {
+        if (estado) {
+            clienteMapper.vetarCliente(docu, 1);
+        } else {
+            clienteMapper.vetarCliente(docu, 0);
+        }
+    }
+
     
 }

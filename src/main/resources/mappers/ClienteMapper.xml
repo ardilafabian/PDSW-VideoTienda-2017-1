@@ -119,6 +119,12 @@
         WHERE c.documento = #{documento}
     </select>
     
+    <update parameterType="map" id="vetarCliente">
+        update VI_CLIENTES
+        set vetado = #{vetar}
+        where documento = #{cliente}
+    </update>
+    
     <resultMap type="Cliente" id="ClienteResult">
         <id property="documento" column="cl_documento"/>
         <result property="nombre" column="cl_nombre"/>
