@@ -45,6 +45,11 @@
         where id not in select ITEMS_id from VI_ITEMRENTADO)
     </select>
     
+    <update parameterType="map" id="actualizarTarifa">
+        update VI_ITEMS
+        set tarifaxdia = #{tarifa}
+        where id = #{item}
+    </update>
     
     <resultMap type="Item" id="ItemResult">
         <id property="id" column="id"/>

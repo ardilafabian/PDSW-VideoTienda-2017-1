@@ -20,4 +20,5 @@ public interface ItemDAO {
     
     public List<Item> load() throws PersistenceException;
     
+    public void actualizarTarifa(int id, long tarifa) throws PersistenceException;
 }

@@ -191,9 +191,19 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
-        if (tarifa < 0) {
+        Item it = this.consultarItem(id);
+        
+        if (it == null) {
+            throw new ExcepcionServiciosAlquiler("El item no existe");
+        } else if (tarifa < 0) {
             throw new ExcepcionServiciosAlquiler("Tarifa no puede ser negativa");
-        } else {} //TODO: implementar
+        } else {
+            try {
+                daoItem.actualizarTarifa(id, tarifa);
+            } catch (PersistenceException ex) {
+                throw new ExcepcionServiciosAlquiler("Error al actualizar la tarifa del item "+it.getNombre() , ex);
+            }
+        }
     }
 
     @Override
