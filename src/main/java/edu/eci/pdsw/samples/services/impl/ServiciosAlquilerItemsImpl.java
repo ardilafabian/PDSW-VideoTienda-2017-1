@@ -76,8 +76,12 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public List<Item> consultarItemsDisponibles() {
-        return new ArrayList<>(); // TODO implementar
+    public List<Item> consultarItemsDisponibles() throws ExcepcionServiciosAlquiler {
+        try {
+            return daoItem.load();
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar items disponibles ", ex);
+        } 
     }
 
     private ItemRentado consultarItemRentado(int iditem) throws ExcepcionServiciosAlquiler {
@@ -187,7 +191,9 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); // TODO implementar
+        if (tarifa < 0) {
+            throw new ExcepcionServiciosAlquiler("Tarifa no puede ser negativa");
+        } else {} //TODO: implementar
     }
 
     @Override

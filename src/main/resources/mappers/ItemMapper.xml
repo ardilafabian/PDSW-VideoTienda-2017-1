@@ -39,6 +39,12 @@
         from VI_ITEMS as i join VI_TIPOITEM as t on TIPOITEM_id = t.id
     </select>
     
+    <!-- consultarItemsDisponibles -->
+    <select parameterType="map" id="consultarItemsDisponibles" resultMap="ItemResult">
+        select * from VI_ITEMS
+        where id not in select ITEMS_id from VI_ITEMRENTADO)
+    </select>
+    
     
     <resultMap type="Item" id="ItemResult">
         <id property="id" column="id"/>

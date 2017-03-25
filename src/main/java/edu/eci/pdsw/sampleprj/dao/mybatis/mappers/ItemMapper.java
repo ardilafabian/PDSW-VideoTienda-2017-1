@@ -12,12 +12,11 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ItemMapper {
     
-    
     public List<Item> getItems();
     
     public Item consultarItem(@Param("idItem") int id);
     
     public void insertarItem(@Param("item") Item it);
 
-        
+    public List<Item> consultarItemsDisponibles();    
 }
