@@ -76,8 +76,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
+    private ItemRentado consultarItemRentado(int iditem) throws ExcepcionServiciosAlquiler {
         List<Cliente> clientes = this.consultarClientes();
         ItemRentado item = null;
         
@@ -94,7 +93,14 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         if (item == null) {
             throw new ExcepcionServiciosAlquiler("El item " + iditem + "no esta en alquiler");
         }
-            
+        
+        return item;
+    }
+    
+    @Override
+    public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
+        ItemRentado item = consultarItemRentado(iditem);
+        
         LocalDate fechaMinimaEntrega = item.getFechafinrenta().toLocalDate();
         LocalDate fechaEntrega = fechaDevolucion.toLocalDate();
         long diasRetraso = ChronoUnit.DAYS.between(fechaMinimaEntrega, fechaEntrega);
@@ -132,7 +138,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
                 throw new ExcepcionServiciosAlquiler("No es posible registrar un cliente null");
             }
         } catch (PersistenceException ex) {
-            throw new ExcepcionServiciosAlquiler("Error al registrar el cliente " + p,ex);
+            throw new ExcepcionServiciosAlquiler("Error al registrar el cliente " + p, ex);
         }
     }
 
@@ -143,7 +149,14 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Item it = null;
+        try {
+            it = daoItem.load(iditem);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar el item " + iditem, ex);
+        }
+        
+        return it.getTarifaxDia() * numdias;
     }
 
     @Override
