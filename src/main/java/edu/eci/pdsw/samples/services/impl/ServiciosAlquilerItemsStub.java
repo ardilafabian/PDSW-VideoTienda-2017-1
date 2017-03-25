@@ -278,6 +278,11 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
 
     }
 
+    @Override
+    public void agregarTipoItem(TipoItem tipo) throws ExcepcionServiciosAlquiler {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 
     

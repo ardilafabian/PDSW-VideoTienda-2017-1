@@ -95,5 +95,11 @@ public interface ServiciosAlquiler {
     public abstract void registrarItem(Item i) throws ExcepcionServiciosAlquiler;
 
     public abstract void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler;
-
+    
+    /**
+     * Agrega un nuevo tipo de item
+     * @param tipo de item
+     * @throws ExcepcionServiciosAlquiler si el id esta repetido
+     */
+    public abstract void agregarTipoItem(TipoItem tipo) throws ExcepcionServiciosAlquiler;
 }

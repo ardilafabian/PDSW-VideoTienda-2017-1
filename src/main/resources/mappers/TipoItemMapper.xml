@@ -4,6 +4,27 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.TipoItemMapper">
-
+    <!-- addTipoItem -->
+    
+    <insert parameterType="map" id="addTipoItem">
+        insert into VI_TIPOITEM (id, descripcion) 
+        select max(id)+1, #{tipo} from VI_TIPOITEM;
+    </insert>
+    
+    <!-- getTipoItem -->
+    <select parameterType="map" id="getTipoItem" resultMap="TipoItemResult">
+        select id, descripcion from VI_TIPOITEM where id = #{id}
+    </select>
+    
+    <!-- getTiposItem -->
+    <select parameterType="map" id="getTiposItem" resultMap="TipoItemResult">
+        select id, descripcion from VI_TIPOITEM
+    </select>
+    
+    
+    <resultMap type="TipoItem" id="TipoItemResult">
+        <id property="id" column="id"/>
+        <result property="descripcion" column="descripcion"/>
+    </resultMap>
        
 </mapper>

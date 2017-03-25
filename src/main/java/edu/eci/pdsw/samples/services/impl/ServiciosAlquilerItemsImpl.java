@@ -6,6 +6,7 @@ import com.sun.media.jfxmedia.logging.Logger;
 import edu.eci.pdsw.sampleprj.dao.ClienteDAO;
 import edu.eci.pdsw.sampleprj.dao.ItemDAO;
 import edu.eci.pdsw.sampleprj.dao.PersistenceException;
+import edu.eci.pdsw.sampleprj.dao.TipoItemDAO;
 
 import edu.eci.pdsw.samples.entities.Cliente;
 import edu.eci.pdsw.samples.entities.Item;
@@ -16,6 +17,7 @@ import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -31,10 +33,13 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     
     @Inject
     private ClienteDAO daoCliente;
+    
+    @Inject
+    private TipoItemDAO daoTipoItem;
         
     @Override
     public int valorMultaRetrasoxDia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0; // TODO implementar
     }
 
     @Override
@@ -72,7 +77,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public List<Item> consultarItemsDisponibles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ArrayList<>(); // TODO implementar
     }
 
     private ItemRentado consultarItemRentado(int iditem) throws ExcepcionServiciosAlquiler {
@@ -114,22 +119,20 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public TipoItem consultarTipoItem(int id) throws ExcepcionServiciosAlquiler {
-        Item it = this.consultarItem(id);
-        
-        if (it == null) {
-            throw new ExcepcionServiciosAlquiler("Error obteniendo el item " + id);
+        try {
+            return daoTipoItem.load(id);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al obtener el tipo de item " + id, ex);
         }
-        
-        if (it.getTipo() == null) {
-            throw new ExcepcionServiciosAlquiler("Error obteniendo el tipo del item " + id);
-        }
-        
-        return it.getTipo();
     }
 
     @Override
     public List<TipoItem> consultarTiposItem() throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return daoTipoItem.loadTipos();
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al obtener los tipos de los items", ex);
+        }
     }
 
     @Override
@@ -167,7 +170,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarDevolucion(int iditem) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // TODO implementar
     }
 
     @Override
@@ -184,7 +187,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // TODO implementar
     }
 
     @Override
@@ -198,9 +201,15 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // TODO implementar
     }
-    
-    
-    
+
+    @Override
+    public void agregarTipoItem(TipoItem tipo) throws ExcepcionServiciosAlquiler {
+        try {
+            daoTipoItem.save(tipo);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al registrar el tipo de item " + tipo, ex);
+        }
+    }
 }
