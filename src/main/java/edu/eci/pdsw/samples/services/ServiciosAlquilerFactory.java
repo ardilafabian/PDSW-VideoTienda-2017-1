@@ -24,8 +24,6 @@ public class ServiciosAlquilerFactory {
 
     private static ServiciosAlquilerFactory instance = new ServiciosAlquilerFactory();
     
-    private static final boolean TESTING = false;
-    
     private static Injector injector;
     
     private static Injector testInjector;
@@ -66,7 +64,7 @@ public class ServiciosAlquilerFactory {
     }
 
     public ServiciosAlquiler getServiciosAlquiler(){
-        return TESTING ? getServiciosAlquilerTesting() : injector.getInstance(ServiciosAlquiler.class);   
+        return injector.getInstance(ServiciosAlquiler.class);   
     }
 
 
