@@ -36,10 +36,12 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     
     @Inject
     private TipoItemDAO daoTipoItem;
-        
+    
+    private static final int MULTA_DIARIA=5000;
+    
     @Override
     public int valorMultaRetrasoxDia() {
-        return 0; // TODO implementar
+        return MULTA_DIARIA;
     }
 
     @Override
@@ -174,7 +176,16 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarDevolucion(int iditem) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); // TODO implementar
+        ItemRentado it = this.consultarItemRentado(iditem);
+        if (this.consultarMultaAlquiler(iditem, it.getFechafinrenta()) != 0) {
+            throw new ExcepcionServiciosAlquiler("El cliente tiene una multa pendiente");
+        } else {
+            try {
+                daoCliente.registrarDevolucion(iditem);
+            } catch (PersistenceException ex) {
+                throw new ExcepcionServiciosAlquiler("Error al registrar devolcion ", ex);
+            }
+        }
     }
 
     @Override

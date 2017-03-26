@@ -47,4 +47,5 @@ public interface ClienteMapper {
     
     public void vetarCliente(@Param("cliente") long doc, @Param("vetar") int vet);
     
+    public void registrarDevolucion(@Param("idItem") int id);
 }

@@ -81,7 +81,7 @@ public class AlquilerItemsBean implements Serializable {
         }
     }
     
-    public void setRentedItem(int id) {
+    public void setRentedItem(int id) throws ExcepcionServiciosAlquiler {
         List<Item> itds = sp.consultarItemsDisponibles();
         boolean is = false;
         for (Item i : itds) {

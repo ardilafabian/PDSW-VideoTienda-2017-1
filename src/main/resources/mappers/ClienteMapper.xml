@@ -125,6 +125,11 @@
         where documento = #{cliente}
     </update>
     
+    <delete parameterType="map" id="registrarDevolucion">
+        delete from VI_ITEMRENTADO
+        where ITEMS_id = #{idItem}
+    </delete>
+    
     <resultMap type="Cliente" id="ClienteResult">
         <id property="documento" column="cl_documento"/>
         <result property="nombre" column="cl_nombre"/>

@@ -25,4 +25,6 @@ public interface ClienteDAO {
     public void registrarItemRentado(long doc, ItemRentado i) throws PersistenceException;
     
     public void vetarCliente(long docu, boolean estado) throws PersistenceException;
+    
+    public void registrarDevolucion(int idItem) throws PersistenceException;
 }

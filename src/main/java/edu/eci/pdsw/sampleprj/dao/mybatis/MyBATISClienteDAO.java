@@ -64,5 +64,14 @@ public class MyBATISClienteDAO implements ClienteDAO {
         }
     }
 
+    @Override
+    public void registrarDevolucion(int idItem) throws PersistenceException {
+        try {
+            clienteMapper.registrarDevolucion(idItem);
+        } catch (org.apache.ibatis.exceptions.PersistenceException e){
+            throw new PersistenceException("Error al registrar devolucion ",e);
+        }
+    }
+
     
 }
