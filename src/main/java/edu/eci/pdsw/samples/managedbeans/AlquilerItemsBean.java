@@ -12,14 +12,11 @@ import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquilerFactory;
 import java.io.Serializable;
-import java.time.*;
-import java.sql.Date;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -59,8 +56,14 @@ public class AlquilerItemsBean implements Serializable {
         }
     }
     
-    public String getClientName() throws ExcepcionServiciosAlquiler {
-        return sp.consultarCliente(clientId).getNombre();
+    public String getClientName() {
+        String n = "null";
+        try {
+            n = sp.consultarCliente(clientId).getNombre();
+        } catch (ExcepcionServiciosAlquiler ex) {
+            Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+        }
+        return n;
     }
     
     public ClientesBean getClientBean(){
@@ -71,28 +74,46 @@ public class AlquilerItemsBean implements Serializable {
         this.clientBean = mb;
     }
     
-    public List<ItemRentado> getItems() throws ExcepcionServiciosAlquiler {
-        return sp.consultarItemsCliente(this.clientId);
+    public List<ItemRentado> getItems() {
+        List<ItemRentado> itrs = null;
+        try {
+            itrs = sp.consultarItemsCliente(this.clientId);
+        } catch (ExcepcionServiciosAlquiler ex) {
+            Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+        }
+        
+        return itrs;
     }
     
-    public long getMulta(ItemRentado itr) throws ExcepcionServiciosAlquiler {
+    public long getMulta(ItemRentado itr) {
+        long r = 0;
+        Logger.logMsg(Logger.DEBUG, this.getClass().getName() + "->getMulta() ItemRentado: " + itr);
         if (itr != null) {
-            Logger.logMsg(Logger.DEBUG, this.getClass().getName() + "->getMulta() ItemRentado: " + itr);
-            return sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
+            try {
+                r =  sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
+            } catch (ExcepcionServiciosAlquiler ex) {
+                Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+            }
         } else {
-            throw new ExcepcionServiciosAlquiler("getMulta: El item rentado es null");
+            Logger.logMsg(Logger.ERROR, "getMulta: El item rentado es null");
         }
+        return r;
     }
     
-    public void setRentedItem(int id) throws ExcepcionServiciosAlquiler {
-        List<Item> itds = sp.consultarItemsDisponibles();
+    public void setRentedItem(int id) {
         boolean is = false;
-        for (Item i : itds) {
-            if (i.getId() == id) {
-                is = true;
+        try {
+            List<Item> itds = sp.consultarItemsDisponibles();
+            for (Item i : itds) {
+                if (i.getId() == id) {
+                    is = true;
+                }
             }
+        } catch (ExcepcionServiciosAlquiler ex) {
+            Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
         }
-        Logger.logMsg(Logger.DEBUG, "El item esta disponible: "+is);
+        
+        Logger.logMsg(Logger.DEBUG, "El item esta disponible: " + is);
         if (is) {
             Logger.logMsg(Logger.DEBUG, "Intenta asignar id del item: "+ id);
             this.itemId = id;
@@ -106,15 +127,19 @@ public class AlquilerItemsBean implements Serializable {
         return 0;
     }
     
-    public void setDate(int days) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.DEBUG, "Intenta asignar dias de prestamo" + days +" para el item "+ itemId);
-        this.rentDays = days;
-        this.rentCost = sp.consultarCostoAlquiler(itemId, days);
-        Logger.logMsg(Logger.DEBUG, "Agrega costo de la renta "+rentCost);
+    public void setDate(int days) {
+        try {
+            Logger.logMsg(Logger.DEBUG, "Intenta asignar dias de prestamo" + days +" para el item "+ itemId);
+            this.rentDays = days;
+            this.rentCost = sp.consultarCostoAlquiler(itemId, days);
+            Logger.logMsg(Logger.DEBUG, "Agrega costo de la renta "+rentCost);
+        } catch (ExcepcionServiciosAlquiler ex) {
+            Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+        }
     }
     
     public int getDate() {
-        return 0;
+        return 0; // XXX deberia ser asi?
     }
     
     public long getRentCost() {
@@ -125,10 +150,14 @@ public class AlquilerItemsBean implements Serializable {
     public void setRentCost(long rent) {
     }
     
-    public void alquilarItem() throws ExcepcionServiciosAlquiler {
-        java.util.Date dt = new java.util.Date();
-        Logger.logMsg(Logger.DEBUG, "Se alquila item para usuario: " + clientId + 
-                " el item: " + (sp.consultarItem(itemId) != null ? sp.consultarItem(itemId).getNombre() : "null"));
-        sp.registrarAlquilerCliente(new java.sql.Date(dt.getTime()), clientId, sp.consultarItem(itemId), rentDays);
+    public void alquilarItem() {
+        try {
+            java.util.Date dt = new java.util.Date();
+            Logger.logMsg(Logger.DEBUG, "Se alquila item para usuario: " + clientId +
+                    " el item: " + sp.consultarItem(itemId).getNombre());
+            sp.registrarAlquilerCliente(new java.sql.Date(dt.getTime()), clientId, sp.consultarItem(itemId), rentDays);
+        } catch (ExcepcionServiciosAlquiler ex) {
+            Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+        }
     }
 }

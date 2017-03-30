@@ -15,8 +15,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.*;
 
 /**
  *
@@ -51,9 +49,16 @@ public class ClientesBean implements Serializable {
         return clientId;
     }
     
-    public List<Cliente> getClientes() throws ExcepcionServiciosAlquiler {
+    public List<Cliente> getClientes() {
         Logger.logMsg(Logger.DEBUG, "Se obtienen los clientes desde " + this.getClass().getName());
-        return sp.consultarClientes();
+        List<Cliente> clientes = null;
+        try {
+            clientes = sp.consultarClientes();
+        } catch (ExcepcionServiciosAlquiler ex) {
+            Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+        }
+        
+        return clientes;
     }
     
     public void registrarCliente() {
