@@ -48,6 +48,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler {
         try {
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarCliente): consulta cliente " + docu);
             return daoCliente.load((int)docu);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar el cliente " + docu,ex);
@@ -56,6 +57,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarItemsCliente): consula items de cliente " + idcliente);
         Cliente c = this.consultarCliente(idcliente);
         return c.getRentados();
     }
@@ -63,6 +65,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
         try {
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarClientes): Intenta consultar clientes");
             return daoCliente.loadClientes();
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar los clientes",ex);
@@ -72,6 +75,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public Item consultarItem(int id) throws ExcepcionServiciosAlquiler {
         try {
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarItem): "
+                    + "Intenta consultar item con id: " + id);
             return daoItem.load(id);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar el item "+id,ex);
@@ -91,6 +96,9 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     }
 
     private ItemRentado consultarItemRentado(int iditem) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarItemRentado): consulta"
+                + "item rentado " + iditem);
+        
         List<Cliente> clientes = this.consultarClientes();
         ItemRentado item = null;
         
@@ -105,6 +113,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         }
         
         if (item == null) {
+            Logger.logMsg(Logger.ERROR, "ServiciosAlquilerItemsImpl(consultarItemRentado): "
+                    + "El item rentado es null");
             throw new ExcepcionServiciosAlquiler("El item " + iditem + " no esta en alquiler");
         }
         
@@ -113,6 +123,9 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     
     @Override
     public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consulatMultaAlquiler): intenta consultar"
+                + "multa de item " + iditem + " con fecha de devolucion " + fechaDevolucion);
+        
         ItemRentado item = consultarItemRentado(iditem);
         
         LocalDate fechaMinimaEntrega = item.getFechafinrenta().toLocalDate();
@@ -130,6 +143,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public TipoItem consultarTipoItem(int id) throws ExcepcionServiciosAlquiler {
         try {
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarTipoItem): intenta consultar"
+                    + " tipo item " + id);
             return daoTipoItem.load(id);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al obtener el tipo de item " + id, ex);
@@ -139,6 +154,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public List<TipoItem> consultarTiposItem() throws ExcepcionServiciosAlquiler {
         try {
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarTiposItem): intenta consular"
+                    + " tipos de item");
             return daoTipoItem.loadTipos();
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al obtener los tipos de los items", ex);
@@ -147,6 +164,10 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarAlquilerCliente):"
+                + " Intenta registrar alquiler a cliente " + docu + " con item " + item
+                        + " con fecha " + date + " y numero de dias " + numdias);
+        
         LocalDate ld = date.toLocalDate();
         LocalDate ld2 = ld.plusDays(numdias);
         
@@ -158,6 +179,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         Logger.logMsg(Logger.DEBUG, this.getClass().getName() + 
                     "->registrarAlquilerCliente() : " + Arrays.toString(l.toArray()));
         if (! this.consultarItemsDisponibles().contains(item)) {
+            Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarAlquilerCliente):"
+                    + " Error ya que el item no esta disponible para alquiler");
             throw new ExcepcionServiciosAlquiler("El item " + item + " no esta disponible para alquiler");
         }
         
@@ -170,6 +193,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarCliente(Cliente p) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarCliente): intenta registrar cliente " + p);
         try {
             if (p != null) {
                 daoCliente.save(p);
@@ -183,6 +207,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarDevolucion(int iditem) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarDevolucion):"
+                    + " Intenta realizar devolucion de item " + iditem);
         ItemRentado it = this.consultarItemRentado(iditem);
         if (this.consultarMultaAlquiler(iditem, it.getFechafinrenta()) != 0) {
             throw new ExcepcionServiciosAlquiler("El cliente tiene una multa pendiente");
@@ -197,6 +223,9 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(consultarCostoAlquiler):"
+                    + " Intenta consultar costo de alquiler de item " + iditem);
+         
         Item it = null;
         try {
             it = daoItem.load(iditem);
@@ -209,6 +238,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(actualizaTarifaItem):"
+                    + " Intenta actualizar tarifa de item " + id + " y tarifa " + tarifa);
         Item it = this.consultarItem(id);
         
         if (it == null) {
@@ -226,6 +257,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarItem(Item i) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarItem):"
+                    + " Intenta registrar item " + i);
         try {
             daoItem.save(i);
         } catch (PersistenceException ex) {
@@ -235,6 +268,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(vetarCliente):"
+                    + " Intenta vetar cliente " + docu);
         try {
             daoCliente.vetarCliente(docu, estado);
         } catch (PersistenceException ex) {
@@ -244,6 +279,8 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void agregarTipoItem(TipoItem tipo) throws ExcepcionServiciosAlquiler {
+        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(agregarTipoItem):"
+                    + " Intenta agregar tipo item " + tipo);
         try {
             daoTipoItem.save(tipo);
         } catch (PersistenceException ex) {

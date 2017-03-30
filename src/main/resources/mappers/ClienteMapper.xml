@@ -137,14 +137,14 @@
         <result property="direccion" column="direccion"/>
         <result property="email" column="direccion"/>
         <result property="vetado" column="vetado"/>
-        <collection property="rentados" columnPrefix="ir_" ofType="ItemRentado" resultMap="ItemRentadoResult"/>
+        <collection property="rentados" columnPrefix="ir_" ofType="ItemRentado" resultMap="ItemRentadoResult" />
     </resultMap>
     
     <resultMap type="ItemRentado" id="ItemRentadoResult">
         <id property="id" column="id"/>
         <result property="fechainiciorenta" column="fechaIniciorenta"/>
         <result property="fechafinrenta" column="fechaFinRenta"/>
-        <association property="item" columnPrefix="it_" javaType="edu.eci.pdsw.samples.entities.Item" resultMap="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper.ItemResult" />
+        <association property="item" columnPrefix="it_" javaType="Item" resultMap="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper.ItemResult" />
     </resultMap>
     
     
