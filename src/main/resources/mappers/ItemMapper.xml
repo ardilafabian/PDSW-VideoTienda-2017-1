@@ -20,9 +20,18 @@
 
     <!-- consultarItem -->
     <select parameterType="map" id="consultarItem" resultMap="ItemResult">
-        select id, nombre, descripcion, fechalanzamiento, tarifaxdia, formatorenta, genero, TIPOITEM_id
-        from VI_ITEMS 
-        where id = #{idItem}
+        select 
+            i.id as id, 
+            nombre, 
+            i.descripcion as descripcion, 
+            fechalanzamiento, 
+            tarifaxdia, 
+            formatorenta, 
+            genero, 
+            TIPOITEM_id as tipo_id,
+            t.descripcion as tipo_descripcion
+        from VI_ITEMS as i left join VI_TIPOITEM as t on TIPOITEM_id = t.id
+        where i.id = #{idItem}
     </select>
     
     <!-- getItems -->
@@ -31,8 +40,8 @@
             nombre, 
             i.descripcion as descripcion, 
             fechaLanzamiento, 
-            tarifaXDia, 
-            formatoRenta, 
+            tarifaxdia, 
+            formatorenta, 
             genero, 
             TIPOITEM_id as tipo_id, 
             t.descripcion as tipo_descripcion
@@ -41,8 +50,17 @@
     
     <!-- consultarItemsDisponibles -->
     <select parameterType="map" id="consultarItemsDisponibles" resultMap="ItemResult">
-        select * from VI_ITEMS
-        where id not in select ITEMS_id from VI_ITEMRENTADO)
+        select i.id as id,
+            nombre, 
+            i.descripcion as descripcion, 
+            fechaLanzamiento, 
+            tarifaxdia, 
+            formatorenta, 
+            genero, 
+            TIPOITEM_id as tipo_id, 
+            t.descripcion as tipo_descripcion
+        from VI_ITEMS as i join VI_TIPOITEM as t on TIPOITEM_id = t.id
+        where i.id not in (select ITEMS_id from VI_ITEMRENTADO)
     </select>
     
     <update parameterType="map" id="actualizarTarifa">
@@ -56,8 +74,8 @@
         <result property="nombre" column="nombre"/>
         <result property="descripcion" column="descripcion"/>
         <result property="fechaLanzamiento" column="fechaLanzamiento"/>
-        <result property="tarifaxDia" column="tarifaXDia"/>
-        <result property="formatoRenta" column="formatoRenta"/>
+        <result property="tarifaxDia" column="tarifaxdia"/>
+        <result property="formatoRenta" column="formatorenta"/>
         <result property="genero" column="genero"/>
         <association property="tipo" columnPrefix="tipo_" javaType="TipoItem" resultMap="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.TipoItemMapper.TipoItemResult"/>
     </resultMap>

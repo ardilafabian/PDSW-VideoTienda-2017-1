@@ -110,9 +110,8 @@ public class Item implements Serializable{
         return "Item{" + "tipo=" + tipo + ", id=" + id + ", nombre=" + nombre + ", tarifaxDia=" + tarifaxDia + '}';
     }
 
-
-    
-    
-    
-    
+    @Override
+    public boolean equals(Object obj) {
+        return (obj == this) || (this.getId() == ((Item)obj).getId());
+    }
 }

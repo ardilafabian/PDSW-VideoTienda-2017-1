@@ -5,6 +5,7 @@
  */
 package edu.eci.pdsw.samples.tests;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import edu.eci.pdsw.samples.entities.Cliente;
 import edu.eci.pdsw.samples.entities.Item;
 import edu.eci.pdsw.samples.entities.TipoItem;
@@ -13,7 +14,6 @@ import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquilerFactory;
 import edu.eci.pdsw.samples.services.impl.ServiciosAlquilerItemsStub;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -41,6 +41,7 @@ public class AlquilerTest {
     private ServiciosAlquiler sa;
     
     public AlquilerTest() {
+        Logger.setLevel(Logger.DEBUG);
     }
     
     @Before
@@ -59,10 +60,14 @@ public class AlquilerTest {
     @Test
     public void CF1Test() throws ExcepcionServiciosAlquiler{
         Item i1 = new Item(sa.consultarTipoItem(0), 44, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");        
+        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #1");
         sa.registrarCliente(new Cliente("Juan Perez",3842,"24234","calle 123","aa@gmail.com"));
+        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #2");
         sa.registrarItem(i1);
+        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #3");
                 
         Item item=sa.consultarItem(44);
+        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #4");
         
         sa.registrarAlquilerCliente(java.sql.Date.valueOf("2005-12-20"), 3842, item, 5);
         

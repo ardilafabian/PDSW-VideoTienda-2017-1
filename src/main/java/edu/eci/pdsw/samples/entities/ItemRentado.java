@@ -67,6 +67,9 @@ public class ItemRentado implements Serializable {
         return "ItemRentado{" + "id=" + id + ", item=" + item + ", fechainiciorenta=" + fechainiciorenta + ", fechafinrenta=" + fechafinrenta + '}';
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        return (obj == this) || (this.getId() == ((ItemRentado)obj).getId());
+    }
     
 }

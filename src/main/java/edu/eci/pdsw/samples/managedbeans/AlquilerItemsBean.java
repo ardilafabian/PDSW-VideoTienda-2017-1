@@ -42,6 +42,8 @@ public class AlquilerItemsBean implements Serializable {
     private int rentDays;
     
     public AlquilerItemsBean() {
+        Logger.setLevel(Logger.DEBUG);
+        
         Logger.logMsg(Logger.DEBUG, "Id del cliente: "+clientId+" en "+this.getClass().getName());
         Logger.logMsg(Logger.DEBUG, "Se instancia " + this.getClass().getName());
     }
@@ -75,6 +77,7 @@ public class AlquilerItemsBean implements Serializable {
     
     public long getMulta(ItemRentado itr) throws ExcepcionServiciosAlquiler {
         if (itr != null) {
+            Logger.logMsg(Logger.DEBUG, this.getClass().getName() + "->getMulta() ItemRentado: " + itr);
             return sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
         } else {
             throw new ExcepcionServiciosAlquiler("getMulta: El item rentado es null");

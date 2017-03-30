@@ -110,6 +110,9 @@ public class Cliente implements Serializable{
     }
 
    
-    
+    @Override
+    public boolean equals(Object obj) {
+        return (obj == this) || (this.getDocumento() == ((Cliente)obj).getDocumento());
+    }
     
 }

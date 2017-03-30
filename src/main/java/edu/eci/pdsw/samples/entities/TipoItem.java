@@ -49,5 +49,9 @@ public class TipoItem implements Serializable{
         return "TipoItem{" + "id=" + id + ", descripcion=" + descripcion + '}';
     }
     
+    @Override
+    public boolean equals(Object obj) {
+        return (obj == this) || (this.getID() == ((TipoItem)obj).getID());
+    }
     
 }

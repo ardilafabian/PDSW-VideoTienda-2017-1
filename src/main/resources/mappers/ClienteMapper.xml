@@ -9,28 +9,28 @@
     <select parameterType="map" id="consultarClientes" resultMap="ClienteResult">
 	select
     
-            c.nombre as cl_nombre,
-            c.documento as cl_documento,
-            c.telefono as cl_telefono,
-            c.direccion as cl_direccion,
-            c.email as cl_email,
-            c.vetado as cl_vetado,
+            c.nombre as nombre,
+            c.documento as documento,
+            c.telefono as telefono,
+            c.direccion as direccion,
+            c.email as email,
+            c.vetado as vetado,
 
             ir.id as ir_id,
             ir.CLIENTES_documento as ir_documentoCliente,
             ir.fechainiciorenta as ir_fechaIniciorenta,
             ir.fechafinrenta as ir_fechaFinRenta,
 
-            i.id as it_id,
-            i.nombre as it_nombre,
-            i.descripcion as it_descripcion,
-            i.fechalanzamiento as it_fechaLanzamiento,
-            i.tarifaxdia as it_tarifaXDia,
-            i.formatorenta as it_formatoRenta,
-            i.genero as it_genero,
+            i.id as ir_it_id,
+            i.nombre as ir_it_nombre,
+            i.descripcion as ir_it_descripcion,
+            i.fechalanzamiento as ir_it_fechaLanzamiento,
+            i.tarifaxdia as ir_it_tarifaXDia,
+            i.formatorenta as ir_it_formatoRenta,
+            i.genero as ir_it_genero,
                 
-            ti.id as tipo_id,
-            ti.descripcion as tipo_descripcion 
+            ti.id as ir_it_tipo_id,
+            ti.descripcion as ir_it_tipo_descripcion 
         FROM VI_CLIENTES as c 
         left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento 
         left join VI_ITEMS as i on ir.ITEMS_id=i.id 
@@ -41,28 +41,28 @@
     <select parameterType="map" id="consultarCliente" resultMap="ClienteResult">
         select
     
-            c.nombre as cl_nombre,
-            c.documento as cl_documento,
-            c.telefono as cl_telefono,
-            c.direccion as cl_direccion,
-            c.email as cl_email,
-            c.vetado as cl_vetado,
+            c.nombre as nombre,
+            c.documento as documento,
+            c.telefono as telefono,
+            c.direccion as direccion,
+            c.email as email,
+            c.vetado as vetado,
 
             ir.id as ir_id,
             ir.CLIENTES_documento as ir_documentoCliente,
             ir.fechainiciorenta as ir_fechaIniciorenta,
             ir.fechafinrenta as ir_fechaFinRenta,
 
-            i.id as it_id,
-            i.nombre as it_nombre,
-            i.descripcion as it_descripcion,
-            i.fechalanzamiento as it_fechaLanzamiento,
-            i.tarifaxdia as it_tarifaXDia,
-            i.formatorenta as it_formatoRenta,
-            i.genero as it_genero,
+            i.id as ir_it_id,
+            i.nombre as ir_it_nombre,
+            i.descripcion as ir_it_descripcion,
+            i.fechalanzamiento as ir_it_fechaLanzamiento,
+            i.tarifaxdia as ir_it_tarifaXDia,
+            i.formatorenta as ir_it_formatoRenta,
+            i.genero as ir_it_genero,
                 
-            ti.id as tipo_id,
-            ti.descripcion as tipo_descripcion 
+            ti.id as ir_it_tipo_id,
+            ti.descripcion as ir_it_tipo_descripcion 
         FROM VI_CLIENTES as c 
         left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento 
         left join VI_ITEMS as i on ir.ITEMS_id=i.id 
@@ -90,28 +90,28 @@
     <select parameterType="map" id="consultarItemsCliente" resultMap="ItemRentadoResult">
         select
     
-            c.nombre as cl_nombre,
-            c.documento as cl_documento,
-            c.telefono as cl_telefono,
-            c.direccion as cl_direccion,
-            c.email as cl_email,
-            c.vetado as cl_vetado,
+            c.nombre as nombre,
+            c.documento as documento,
+            c.telefono as telefono,
+            c.direccion as direccion,
+            c.email as email,
+            c.vetado as vetado,
 
             ir.id as ir_id,
             ir.CLIENTES_documento as ir_documentoCliente,
             ir.fechainiciorenta as ir_fechaIniciorenta,
             ir.fechafinrenta as ir_fechaFinRenta,
 
-            i.id as it_id,
-            i.nombre as it_nombre,
-            i.descripcion as it_descripcion,
-            i.fechalanzamiento as it_fechaLanzamiento,
-            i.tarifaxdia as it_tarifaXDia,
-            i.formatorenta as it_formatoRenta,
-            i.genero as it_genero,
+            i.id as ir_it_id,
+            i.nombre as ir_it_nombre,
+            i.descripcion as ir_it_descripcion,
+            i.fechalanzamiento as ir_it_fechaLanzamiento,
+            i.tarifaxdia as ir_it_tarifaXDia,
+            i.formatorenta as ir_it_formatoRenta,
+            i.genero as ir_it_genero,
                 
-            ti.id as tipo_id,
-            ti.descripcion as tipo_descripcion 
+            ti.id as ir_it_tipo_id,
+            ti.descripcion as ir_it_tipo_descripcion 
         FROM VI_CLIENTES as c 
         left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento 
         left join VI_ITEMS as i on ir.ITEMS_id=i.id 
@@ -131,20 +131,20 @@
     </delete>
     
     <resultMap type="Cliente" id="ClienteResult">
-        <id property="documento" column="cl_documento"/>
-        <result property="nombre" column="cl_nombre"/>
-        <result property="telefono" column="cl_telefono"/>
-        <result property="direccion" column="cl_direccion"/>
-        <result property="email" column="cl_direccion"/>
-        <result property="vetado" column="cl_vetado"/>
+        <id property="documento" column="documento"/>
+        <result property="nombre" column="nombre"/>
+        <result property="telefono" column="telefono"/>
+        <result property="direccion" column="direccion"/>
+        <result property="email" column="direccion"/>
+        <result property="vetado" column="vetado"/>
         <collection property="rentados" columnPrefix="ir_" ofType="ItemRentado" resultMap="ItemRentadoResult"/>
     </resultMap>
     
     <resultMap type="ItemRentado" id="ItemRentadoResult">
-        <id property="id" column="ir_id"/>
+        <id property="id" column="id"/>
         <result property="fechainiciorenta" column="fechaIniciorenta"/>
         <result property="fechafinrenta" column="fechaFinRenta"/>
-        <association property="item" columnPrefix="it_" javaType="Item" resultMap="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper.ItemResult" />
+        <association property="item" columnPrefix="it_" javaType="edu.eci.pdsw.samples.entities.Item" resultMap="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper.ItemResult" />
     </resultMap>
     
     

@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -80,7 +81,10 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public List<Item> consultarItemsDisponibles() throws ExcepcionServiciosAlquiler {
         try {
-            return daoItem.load();
+            List<Item> l = daoItem.load();
+            Logger.logMsg(Logger.DEBUG, this.getClass().getName() + 
+                    "->consultarItemsDisponibles() : " + Arrays.toString(l.toArray()));
+            return l;
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar items disponibles ", ex);
         } 
@@ -101,7 +105,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         }
         
         if (item == null) {
-            throw new ExcepcionServiciosAlquiler("El item " + iditem + "no esta en alquiler");
+            throw new ExcepcionServiciosAlquiler("El item " + iditem + " no esta en alquiler");
         }
         
         return item;
@@ -150,6 +154,9 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
         //Cliente c = this.consultarCliente(docu);
         //c.getRentados().add(ir); // XXX : es necesario?
+        List<Item> l = this.consultarItemsDisponibles();
+        Logger.logMsg(Logger.DEBUG, this.getClass().getName() + 
+                    "->registrarAlquilerCliente() : " + Arrays.toString(l.toArray()));
         if (! this.consultarItemsDisponibles().contains(item)) {
             throw new ExcepcionServiciosAlquiler("El item " + item + " no esta disponible para alquiler");
         }

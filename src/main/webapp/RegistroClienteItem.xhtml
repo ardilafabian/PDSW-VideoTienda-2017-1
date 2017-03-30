@@ -40,7 +40,7 @@
             <!-- TODO acomodar nombres para seguir convecion de cammelCasing -->
             <p:dataTable var="itemR" value="#{AlquilerItems.items}">
                 <p:column headerText="Item">
-                    <h:outputText value="#{itemR.nombre}" />
+                    <h:outputText value="#{itemR.item.nombre}" />
                 </p:column>
                 <p:column headerText="Inicio Renta">
                     <center>
