@@ -49,7 +49,11 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     public Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler {
         try {
             Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarCliente): consulta cliente " + docu);
-            return daoCliente.load((int)docu);
+            
+            Cliente c = daoCliente.load((int)docu);
+            Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(consultarCliente): los items rentado del cliente son: " +
+                    Arrays.toString(c.getRentados().toArray()));
+            return c;
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar el cliente " + docu,ex);
         }
@@ -107,6 +111,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
             for(int j = 0; j < items.size() && item == null; j++) {
                 ItemRentado actual = items.get(j);
                 if (actual.getId() == iditem) {
+                    Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarItemRentado): Encontro el item rentado dentro de un cliente");
                     item = actual;
                 }
             }
@@ -154,7 +159,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
     @Override
     public List<TipoItem> consultarTiposItem() throws ExcepcionServiciosAlquiler {
         try {
-            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarTiposItem): intenta consular"
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarTiposItem): intenta consultar"
                     + " tipos de item");
             return daoTipoItem.loadTipos();
         } catch (PersistenceException ex) {
@@ -186,6 +191,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         
         try {
             daoCliente.registrarItemRentado(docu, ir);
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarAlquilerCliente): Se registro el item " + ir + " al cliente " + docu);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al registrar item rentado del cliente " + docu, ex);
         }
@@ -197,6 +203,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         try {
             if (p != null) {
                 daoCliente.save(p);
+                Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarCliente): Se registro el cliente " + p);
             } else {
                 throw new ExcepcionServiciosAlquiler("No es posible registrar un cliente null");
             }
@@ -215,6 +222,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         } else {
             try {
                 daoCliente.registrarDevolucion(iditem);
+                Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarDevolucion): Se registro la devolucion de " + iditem);
             } catch (PersistenceException ex) {
                 throw new ExcepcionServiciosAlquiler("Error al registrar devolcion ", ex);
             }
@@ -229,6 +237,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         Item it = null;
         try {
             it = daoItem.load(iditem);
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarCostoAlquiler): se consulta el item: " + it + " con id " + iditem);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar el item " + iditem, ex);
         }
@@ -249,6 +258,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         } else {
             try {
                 daoItem.actualizarTarifa(id, tarifa);
+                Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(actualizaTarifaItem): se actualiza la tarifa del item con id " + id + " a " + tarifa);
             } catch (PersistenceException ex) {
                 throw new ExcepcionServiciosAlquiler("Error al actualizar la tarifa del item "+it.getNombre() , ex);
             }
@@ -261,6 +271,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
                     + " Intenta registrar item " + i);
         try {
             daoItem.save(i);
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarItem): se registra el item " + i);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al registrar el item " + i, ex);
         }
@@ -272,6 +283,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
                     + " Intenta vetar cliente " + docu);
         try {
             daoCliente.vetarCliente(docu, estado);
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(vetarCliente): Se veta al cliente " + docu);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error el vetar cliente ", ex);
         }
@@ -283,6 +295,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
                     + " Intenta agregar tipo item " + tipo);
         try {
             daoTipoItem.save(tipo);
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(agregarTipoItem): se agrega el tipo de item " + tipo);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al registrar el tipo de item " + tipo, ex);
         }
