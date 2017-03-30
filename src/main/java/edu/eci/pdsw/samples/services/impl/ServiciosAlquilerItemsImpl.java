@@ -17,10 +17,8 @@ import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * 
@@ -199,7 +197,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarCliente(Cliente p) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarCliente): intenta registrar cliente " + p);
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarCliente): intenta registrar cliente " + p);
         try {
             if (p != null) {
                 daoCliente.save(p);
@@ -214,7 +212,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarDevolucion(int iditem) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarDevolucion):"
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarDevolucion):"
                     + " Intenta realizar devolucion de item " + iditem);
         ItemRentado it = this.consultarItemRentado(iditem);
         if (this.consultarMultaAlquiler(iditem, it.getFechafinrenta()) != 0) {
@@ -231,7 +229,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(consultarCostoAlquiler):"
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarCostoAlquiler):"
                     + " Intenta consultar costo de alquiler de item " + iditem);
          
         Item it = null;
@@ -247,7 +245,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(actualizaTarifaItem):"
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(actualizaTarifaItem):"
                     + " Intenta actualizar tarifa de item " + id + " y tarifa " + tarifa);
         Item it = this.consultarItem(id);
         
@@ -267,7 +265,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarItem(Item i) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarItem):"
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(registrarItem):"
                     + " Intenta registrar item " + i);
         try {
             daoItem.save(i);
@@ -279,7 +277,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(vetarCliente):"
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(vetarCliente):"
                     + " Intenta vetar cliente " + docu);
         try {
             daoCliente.vetarCliente(docu, estado);
@@ -291,7 +289,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
 
     @Override
     public void agregarTipoItem(TipoItem tipo) throws ExcepcionServiciosAlquiler {
-        Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(agregarTipoItem):"
+        Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(agregarTipoItem):"
                     + " Intenta agregar tipo item " + tipo);
         try {
             daoTipoItem.save(tipo);
