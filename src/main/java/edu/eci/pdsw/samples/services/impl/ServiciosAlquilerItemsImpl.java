@@ -51,7 +51,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
             Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarCliente): consulta cliente " + docu);
             
             Cliente c = daoCliente.load((int)docu);
-            Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(consultarCliente): los items rentado del cliente son: " +
+            Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarCliente): los items rentado del cliente son: " +
                     Arrays.toString(c.getRentados().toArray()));
             return c;
         } catch (PersistenceException ex) {

@@ -89,13 +89,17 @@ public class AlquilerItemsBean implements Serializable {
         long r = 0;
         Logger.logMsg(Logger.DEBUG, this.getClass().getName() + "->getMulta() ItemRentado: " + itr);
         if (itr != null) {
-            try {
-                r =  sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
-            } catch (ExcepcionServiciosAlquiler ex) {
-                Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+            if (itr.getItem() != null) {
+                try {
+                    r =  sp.consultarMultaAlquiler(itr.getItem().getId(), itr.getFechafinrenta());
+                } catch (ExcepcionServiciosAlquiler ex) {
+                    Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
+                }
+            } else {
+                Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": El item del item rentado es null");
             }
         } else {
-            Logger.logMsg(Logger.ERROR, "getMulta: El item rentado es null");
+            Logger.logMsg(Logger.ERROR, this.getClass().getName() + "getMulta: El item rentado es null");
         }
         return r;
     }
@@ -128,10 +132,10 @@ public class AlquilerItemsBean implements Serializable {
     }
     
     public void setDate(int days) {
+        Logger.logMsg(Logger.DEBUG, "Intenta asignar dias de prestamo" + days +" para el item "+ itemId);
         try {
-            Logger.logMsg(Logger.DEBUG, "Intenta asignar dias de prestamo" + days +" para el item "+ itemId);
-            this.rentDays = days;
             this.rentCost = sp.consultarCostoAlquiler(itemId, days);
+            this.rentDays = days;
             Logger.logMsg(Logger.DEBUG, "Agrega costo de la renta "+rentCost);
         } catch (ExcepcionServiciosAlquiler ex) {
             Logger.logMsg(Logger.ERROR, this.getClass().getName() + ": " + ex.getMessage());
@@ -139,7 +143,7 @@ public class AlquilerItemsBean implements Serializable {
     }
     
     public int getDate() {
-        return 0; // XXX deberia ser asi?
+        return 0;
     }
     
     public long getRentCost() {
