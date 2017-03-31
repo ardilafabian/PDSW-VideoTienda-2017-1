@@ -2,7 +2,7 @@ package edu.eci.pdsw.samples.services.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.sun.media.jfxmedia.logging.Logger;
+import edu.eci.pdsw.logger.Logger;
 import edu.eci.pdsw.sampleprj.dao.ClienteDAO;
 import edu.eci.pdsw.sampleprj.dao.ItemDAO;
 import edu.eci.pdsw.sampleprj.dao.PersistenceException;

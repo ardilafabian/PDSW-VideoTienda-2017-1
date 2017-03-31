@@ -5,7 +5,7 @@
  */
 package edu.eci.pdsw.samples.tests;
 
-import com.sun.media.jfxmedia.logging.Logger;
+import edu.eci.pdsw.logger.Logger;
 import edu.eci.pdsw.samples.entities.Cliente;
 import edu.eci.pdsw.samples.entities.Item;
 import edu.eci.pdsw.samples.entities.TipoItem;

@@ -5,7 +5,7 @@
  */
 package edu.eci.pdsw.samples.managedbeans;
 
-import com.sun.media.jfxmedia.logging.Logger;
+import edu.eci.pdsw.logger.Logger;
 import edu.eci.pdsw.samples.entities.Item;
 import edu.eci.pdsw.samples.entities.ItemRentado;
 import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
