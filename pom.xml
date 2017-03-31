@@ -116,16 +116,7 @@
                 </formats>
             </configuration>
         </plugin>
-        <!-- Tomcat embedded plugin. -->
-        <plugin>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat7-maven-plugin</artifactId>
-            <version>2.2</version>
-            <configuration>
-                <port>8080</port>
-                <path>/</path>
-            </configuration>
-        </plugin>
+        
         <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
@@ -158,6 +149,17 @@
 
     <build>
         <plugins>
+            <!-- Tomcat embedded plugin. -->
+        <plugin>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+                <port>8080</port>
+                <path>/</path>
+            </configuration>
+        </plugin>
+            
             
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -237,21 +239,6 @@
             <artifactId>maven-javadoc-plugin</artifactId>
             <version>2.10.1</version>
         </plugin>
-        
-        <!-- clean project (also local H2 database)-->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.6.1</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             
             <!-- create local H2 database -->
             <plugin>
@@ -289,7 +276,7 @@
                 </executions>
             </plugin>
 
-        <plugin>
+         <!-- <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <version>2.1</version>
@@ -313,7 +300,7 @@
                 </execution>
 
             </executions>
-        </plugin>
+        </plugin> -->
         
         </plugins>
 
