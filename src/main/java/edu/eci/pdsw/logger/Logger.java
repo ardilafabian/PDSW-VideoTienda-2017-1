@@ -115,6 +115,7 @@ public class Logger {
     /**
      * Initializes logger.
      * This function should be called once before using any other logger functions.
+     * @return bla
      */
     public static boolean initNative() {
         if (nativeInit()) {
