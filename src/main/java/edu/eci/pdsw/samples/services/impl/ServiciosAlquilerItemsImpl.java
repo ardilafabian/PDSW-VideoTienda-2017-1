@@ -115,7 +115,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
             Logger.logMsg(Logger.DEBUG, "Items rentados de cliente " + clientes.get(i));
             for(int j = 0; j < items.size() && item == null; j++) {
                 ItemRentado actual = items.get(j);
-                if (actual.getItem().getId() == iditem) {
+                if (actual.getItem() != null && actual.getItem().getId() == iditem) {
                     Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarItemRentado): Encontro el item rentado dentro de un cliente");
                     item = actual;
                 }
