@@ -9,6 +9,13 @@ import edu.eci.pdsw.samples.entities.Cliente;
 import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquilerFactory;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -32,6 +39,19 @@ public class ClientesTest {
     public void setUp() {
     }
     
+    @After
+    public void clearDB() throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:h2:file:./target/db/testdb;MODE=MYSQL", "sa", "");
+        Statement stmt = conn.createStatement();
+        
+        stmt.execute("delete from VI_CLIENTES");
+        stmt.execute("delete from VI_ITEMS");
+        stmt.execute("delete from VI_ITEMRENTADO");
+        stmt.execute("delete from VI_TIPOITEM");
+        conn.commit();
+        conn.close();
+    }
+    
     /**
      * 
      * @throws ExcepcionServiciosAlquiler 
@@ -49,11 +69,5 @@ public class ClientesTest {
         
         fail("El servicio de alquiler no lanzo excepcion ExcepcionServiciosAlquiler");
     }
-    
-    
-    
-    
-    
-    
-    
+
 }

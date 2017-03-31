@@ -111,8 +111,10 @@ public class AlquilerTest {
             System.out.println(res.getString("ir_it_tipo_descripcion"));
         }
         
-        //stmt.execute("delete from VI_CLIENTES");
-        //stmt.execute("delete from VI");
+        stmt.execute("delete from VI_CLIENTES");
+        stmt.execute("delete from VI_ITEMS");
+        stmt.execute("delete from VI_ITEMRENTADO");
+        stmt.execute("delete from VI_TIPOITEM");
         conn.commit();
         conn.close();
     }

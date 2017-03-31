@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS `VI_CLIENTES` (
   `telefono` VARCHAR(20)  NOT NULL,
   `direccion` VARCHAR(150)  NOT NULL,
   `email` VARCHAR(150)  NOT NULL,
-  `vetado` TINYINT(1) NOT NULL);
+  `vetado` TINYINT(1) NOT NULL,
+  PRIMARY KEY(documento)
+  );
 
 
 -- -----------------------------------------------------
@@ -12,7 +14,8 @@ CREATE TABLE IF NOT EXISTS `VI_CLIENTES` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `VI_TIPOITEM` (
   `id` INT(11) NOT NULL,
-  `descripcion` VARCHAR(50)  NOT NULL);
+  `descripcion` VARCHAR(50)  NOT NULL,
+  PRIMARY KEY(id));
 
 
 -- -----------------------------------------------------
@@ -26,7 +29,8 @@ CREATE TABLE IF NOT EXISTS `VI_ITEMS` (
   `tarifaxdia` BIGINT(20) NOT NULL,
   `formatorenta` VARCHAR(20) NOT NULL,
   `genero` VARCHAR(20)  NOT NULL,
-  `TIPOITEM_id` INT(11) NOT NULL);
+  `TIPOITEM_id` INT(11) NOT NULL,
+  PRIMARY KEY(id));
 
 
 -- -----------------------------------------------------
@@ -37,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `VI_ITEMRENTADO` (
   `CLIENTES_documento` BIGINT(20) NOT NULL,
   `ITEMS_id` INT(11) NOT NULL,
   `fechainiciorenta` DATE NOT NULL,
-  `fechafinrenta` DATE NOT NULL);
+  `fechafinrenta` DATE NOT NULL,
+  PRIMARY KEY(id));
 
 
