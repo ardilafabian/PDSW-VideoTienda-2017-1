@@ -97,6 +97,12 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         } 
     }
 
+    /**
+     * Consulta por el item rentado que tenga el item con un dicho id
+     * @param iditem del item contenido en el item rentado
+     * @return item rentado
+     * @throws ExcepcionServiciosAlquiler si no existe el item
+     */
     private ItemRentado consultarItemRentado(int iditem) throws ExcepcionServiciosAlquiler {
         Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarItemRentado): consulta"
                 + "item rentado " + iditem);
@@ -106,9 +112,10 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         
         for (int i = 0; i < clientes.size() && item == null; i++) {
             List<ItemRentado> items = clientes.get(i).getRentados();
+            Logger.logMsg(Logger.DEBUG, "Items rentados de cliente " + clientes.get(i));
             for(int j = 0; j < items.size() && item == null; j++) {
                 ItemRentado actual = items.get(j);
-                if (actual.getId() == iditem) {
+                if (actual.getItem().getId() == iditem) {
                     Logger.logMsg(Logger.DEBUG, "ServiciosAlquiler(consultarItemRentado): Encontro el item rentado dentro de un cliente");
                     item = actual;
                 }
@@ -181,7 +188,7 @@ public class ServiciosAlquilerItemsImpl implements ServiciosAlquiler {
         List<Item> l = this.consultarItemsDisponibles();
         Logger.logMsg(Logger.DEBUG, this.getClass().getName() + 
                     "->registrarAlquilerCliente() : " + Arrays.toString(l.toArray()));
-        if (! this.consultarItemsDisponibles().contains(item)) {
+        if (! l.contains(item)) {
             Logger.logMsg(Logger.ERROR, "ServiciosAlquiler(registrarAlquilerCliente):"
                     + " Error ya que el item no esta disponible para alquiler");
             throw new ExcepcionServiciosAlquiler("El item " + item + " no esta disponible para alquiler");

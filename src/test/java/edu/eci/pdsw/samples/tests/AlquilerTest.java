@@ -13,7 +13,14 @@ import edu.eci.pdsw.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquiler;
 import edu.eci.pdsw.samples.services.ServiciosAlquilerFactory;
 import edu.eci.pdsw.samples.services.impl.ServiciosAlquilerItemsStub;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -57,27 +64,77 @@ public class AlquilerTest {
         }
     }
     
+    @After
+    public void showAndDeleteDB() throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:h2:file:./target/db/testdb;MODE=MYSQL", "sa", "");
+        Statement stmt = conn.createStatement();
+        
+        PreparedStatement bd = null;
+        
+        bd = conn.prepareStatement("select\n" +
+            "    \n" +
+            "            c.nombre as nombre,\n" +
+            "            c.documento as documento,\n" +
+            "            c.telefono as telefono,\n" +
+            "            c.direccion as direccion,\n" +
+            "            c.email as email,\n" +
+            "            c.vetado as vetado,\n" +
+            "\n" +
+            "            ir.id as ir_id,\n" +
+            "            ir.CLIENTES_documento as ir_documentoCliente,\n" +
+            "            ir.fechainiciorenta as ir_fechaIniciorenta,\n" +
+            "            ir.fechafinrenta as ir_fechaFinRenta,\n" +
+            "\n" +
+            "            i.id as ir_it_id,\n" +
+            "            i.nombre as ir_it_nombre,\n" +
+            "            i.descripcion as ir_it_descripcion,\n" +
+            "            i.fechalanzamiento as ir_it_fechaLanzamiento,\n" +
+            "            i.tarifaxdia as ir_it_tarifaXDia,\n" +
+            "            i.formatorenta as ir_it_formatoRenta,\n" +
+            "            i.genero as ir_it_genero,\n" +
+            "                \n" +
+            "            ti.id as ir_it_tipo_id,\n" +
+            "            ti.descripcion as ir_it_tipo_descripcion \n" +
+            "        FROM VI_CLIENTES as c \n" +
+            "        left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento \n" +
+            "        left join VI_ITEMS as i on ir.ITEMS_id=i.id \n" +
+            "        left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id ");
+        
+        ResultSet res = bd.executeQuery();
+        
+        while(res.next()) {
+            System.out.println(res.getString("nombre"));
+            System.out.println(res.getString("documento"));
+            System.out.println(res.getString("ir_id"));
+            System.out.println(res.getString("ir_it_nombre"));
+            System.out.println(res.getString("ir_it_tipo_id"));
+            System.out.println(res.getString("ir_it_tipo_descripcion"));
+        }
+        
+        //stmt.execute("delete from VI_CLIENTES");
+        //stmt.execute("delete from VI");
+        conn.commit();
+        conn.close();
+    }
+    
+    /**
+     * CF1: Multas a devoluciones hechas en la fecha exacta (multa 0).
+     * @throws ExcepcionServiciosAlquiler 
+     */
     @Test
     public void CF1Test() throws ExcepcionServiciosAlquiler{
-        Item i1 = new Item(sa.consultarTipoItem(0), 44, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");        
-        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #1");
+        Item i1 = new Item(sa.consultarTipoItem(0), 44, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");
         sa.registrarCliente(new Cliente("Juan Perez",3842,"24234","calle 123","aa@gmail.com"));
-        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #2");
         sa.registrarItem(i1);
-        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #3");
-                
-        Item item=sa.consultarItem(44);
-        Logger.logMsg(Logger.DEBUG, "CF1Test: entra #4");
         
-        sa.registrarAlquilerCliente(java.sql.Date.valueOf("2005-12-20"), 3842, item, 5);
+        sa.registrarAlquilerCliente(java.sql.Date.valueOf("2005-12-20"), 3842, i1, 5);
         
         assertEquals("No se calcula correctamente la multa (0) "
                 + "cuando la devolucion se realiza el dia limite."
-                ,0,sa.consultarMultaAlquiler(44, java.sql.Date.valueOf("2005-12-25")));
+                , 0, sa.consultarMultaAlquiler(44, java.sql.Date.valueOf("2005-12-25")));
                 
     }
     
-
     @Test
     public void CE1Test() throws ExcepcionServiciosAlquiler{
         Item i1 = new Item(sa.consultarTipoItem(0), 55, "Los 4 Fantasticos", "Los 4 Fantásticos  es una película de superhéroes  basada en la serie de cómic homónima de Marvel.", java.sql.Date.valueOf("2005-06-08"), 2000, "DVD", "Ciencia Ficcion");        
@@ -108,7 +165,5 @@ public class AlquilerTest {
         
         assertEquals("Item aun aparece disponible", false ,sa.consultarItemsDisponibles().contains(item));
     }
-    
-    
     
 }
