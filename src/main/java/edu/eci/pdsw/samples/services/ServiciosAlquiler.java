@@ -34,6 +34,7 @@ public interface ServiciosAlquiler {
     /**
      * consultar los items que estan disponibles para alquiler
      * @return el listado de items disponibles
+     * @throws ExcepcionServiciosAlquiler si ocurre un error de persistencia
      */
     public abstract List<Item> consultarItemsDisponibles() throws ExcepcionServiciosAlquiler;
 
@@ -55,7 +56,7 @@ public interface ServiciosAlquiler {
 
     /**
      * registrar el alquiler de un item
-     *  numdias >=1
+     *  numdias &gt;=1
      * @param date fecha de registro del alquiler
      * @param docu identificacion de a quien se le cargara el alquiler
      * @param item el identificador del item a alquilar
@@ -81,7 +82,7 @@ public interface ServiciosAlquiler {
 
     /**
      *  consultar el costo del alquiler de un item
-     *  numdias >=1
+     *  numdias &gt;=1
      * @param iditem el codigo del item
      * @param numdias el numero de dias que se va a alquilar
      * @return el costo total del alquiler, teniendo en cuesta el costo diario y

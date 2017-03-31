@@ -1,48 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.eci.pdsw.logger;
 
-/**
- * Logger class used for logging that can output to console or file.<br/>
- * <br/>
- * How to use logger in Java layer:<br/><br/>
- * // Initialize logger<br/>
- * Logger.init();<br/>
- * // Set logger level<br/>
- * Logger.setLevel(Logger.DEBUG);<br/>
- *<br/>
- * // Log some messages<br/>
- * // Use canLog() to check if message can be logged before doing logging. This is done for performance consideration.<br/>
- * if (Logger.canLog(Logger.DEBUG))<br/>
- * &nbsp;&nbsp;Logger.logMsg(Logger.DEBUG, "Test DEBUG message");<br/>
- * if (Logger.canLog(Logger.INFO))<br/>
- * &nbsp;&nbsp;Logger.logMsg(Logger.INFO, "Test INFO message");<br/>
- * if (Logger.canLog(Logger.ERROR))<br/>
- * &nbsp;&nbsp;Logger.logMsg(Logger.ERROR, "Test ERROR message");<br/>
- * if (Logger.canLog(Logger.WARNING))<br/>
- * &nbsp;&nbsp;Logger.logMsg(Logger.WARNING, "Test WARNING message");<br/>
- * if (Logger.canLog(Logger.DEBUG))<br/>
- * &nbsp;&nbsp;Logger.logMsg(Logger.DEBUG, "SomeClass", "SomeMethod", "Test DEBUG message");<br/>
- * <br/>
- * How to use logger in Native layer:<br/><br/>
- * Note: Set ENABLE_LOGGING to 1 in ProductFlags.h to enable logging in native layer.<br/><br/>
- * In native levels are define as following:<br/>
- * LOGGER_OFF = Logger.OFF<br/>
- * LOGGER_ERROR = Logger.ERROR<br/>
- * LOGGER_WARNING = Logger.WARNING<br/>
- * LOGGER_INFO = Logger.INFO<br/>
- * LOGGER_DEBUG = Logger.DEBUG<br/>
- * <br/>
- * Use following macros to log in native level:<br/>
- * LOGGER_LOGMSG() = void logMsg(int level, String msg)<br/>
- * LOGGER_LOGMSG_CM() = void logMsg(int level, String sourceClass, String sourceMethod, String msg)<br/>
- * Examples:<br/>
- * LOGGER_LOGMSG(LOGGER_DEBUG, "Initializing NativeMediaManager");<br/>
- * LOGGER_LOGMSG_CM(LOGGER_DEBUG, "None", "nativeInitNativeMediaManager", "Initializing NativeMediaManager");<br/>
- */
 public class Logger {
 
     /**
